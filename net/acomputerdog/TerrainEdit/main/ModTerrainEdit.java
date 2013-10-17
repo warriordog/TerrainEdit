@@ -9,7 +9,7 @@ public class ModTerrainEdit extends Mod {
      * --This should never be changed after the mod has been released!--
      *
      * @return Returns the id of the mod.
-     */
+    */
     @Override
     public String getModId() {
         return "acomputerdog.terrainedit";
@@ -20,7 +20,7 @@ public class ModTerrainEdit extends Mod {
      * --Can be changed among versions, so this should not be used to ID mods!--
      *
      * @return Returns user-friendly name of the mod.
-     */
+    */
     @Override
     public String getModName() {
         return "Terrain Edit";
@@ -30,7 +30,7 @@ public class ModTerrainEdit extends Mod {
      * Gets the version of the mod as an integer for choosing the newer version.
      *
      * @return Return the version of the mod as an integer.
-     */
+    */
     @Override
     public int getIntModVersion() {
         return 0;
@@ -40,7 +40,7 @@ public class ModTerrainEdit extends Mod {
      * Gets the version of the mod as a String for display.
      *
      * @return Returns the version of the mod as an integer.
-     */
+    */
     @Override
     public String getStringModVersion() {
         return "0.0";
@@ -51,7 +51,7 @@ public class ModTerrainEdit extends Mod {
      * -Called before mod is loaded!  Do not depend on Mod.load()!-
      *
      * @return Returns true if the mod is compatible with the installed version of BlazeLoader.
-     */
+    */
     @Override
     public boolean isCompatibleWithBLVersion() {
         if(Version.getMinecraftVersion().equals("1.6.4") && Version.getGlobalVersion() == 0 && Version.getApiVersion() <= 2){
@@ -66,33 +66,9 @@ public class ModTerrainEdit extends Mod {
      * Gets a user-friendly description of the mod.
      *
      * @return Return a String representing a user-friendly version of the mod.
-     */
+    */
     @Override
     public String getModDescription() {
         return "A command-line terrain editor";
-    }
-
-    /**
-     * Called when mod is loaded.  Called before game is loaded.
-     */
-    @Override
-    public void load() {
-        super.load();
-    }
-
-    /**
-     * Called when mod is started.  Game is fully loaded and can be interacted with.
-     */
-    @Override
-    public void start() {
-        super.start();
-    }
-
-    /**
-     * Called when mod is stopped.  Game is about to begin shutting down, so mod should release system resources, close streams, etc.
-     */
-    @Override
-    public void stop() {
-        super.stop();
     }
 }
