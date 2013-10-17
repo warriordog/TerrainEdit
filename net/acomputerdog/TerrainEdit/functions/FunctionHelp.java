@@ -60,7 +60,7 @@ public class FunctionHelp extends BaseFunction {
      *
      * @param user The user executing the command.
      * @param args The arguments passed to the module.
-     *             -WARNING: args[0] is always the name of the sub-command!  Skip it!-
+     * -WARNING: args[0] is always the name of the sub-command!  Skip it!-
      */
     @Override
     public void execute(ICommandSender user, String[] args) {

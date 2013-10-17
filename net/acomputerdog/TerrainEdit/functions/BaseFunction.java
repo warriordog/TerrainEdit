@@ -48,7 +48,7 @@ public abstract class BaseFunction {
      * Executes the command.
      * @param user The user executing the command.
      * @param args The arguments passed to the module.
-     *             -WARNING: args[0] is always the name of the sub-command!  Skip it!-
+     * -WARNING: args[0] is always the name of the sub-command!  Skip it!-
      */
     public abstract void execute(ICommandSender user, String[] args);
 
