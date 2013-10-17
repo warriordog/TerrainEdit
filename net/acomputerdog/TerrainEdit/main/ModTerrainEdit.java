@@ -1,9 +1,14 @@
 package net.acomputerdog.TerrainEdit.main;
 
+import net.acomputerdog.BlazeLoader.api.command.ApiCommand;
 import net.acomputerdog.BlazeLoader.main.Version;
 import net.acomputerdog.BlazeLoader.mod.Mod;
+import net.acomputerdog.BlazeLoader.util.BLLogger;
 
 public class ModTerrainEdit extends Mod {
+    public CommandTE command;
+    public BLLogger logger = new BLLogger(this, true, true);
+
     /**
      * Returns ID used to identify this mod internally, even among different versions of the same mod.  Mods should override.
      * --This should never be changed after the mod has been released!--
@@ -70,5 +75,14 @@ public class ModTerrainEdit extends Mod {
     @Override
     public String getModDescription() {
         return "A command-line terrain editor";
+    }
+
+    /**
+     * Called when mod is started.  Game is fully loaded and can be interacted with.
+     */
+    @Override
+    public void start() {
+        ApiCommand.registerCommand(command = new CommandTE(this));
+        logger.logInfo("Loaded.");
     }
 }
