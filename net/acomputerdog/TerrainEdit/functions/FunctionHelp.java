@@ -69,20 +69,22 @@ public class FunctionHelp extends BaseFunction {
         try{
             if(args.length >= 2){
                 currPage = Integer.parseInt(args[1]);
-                if(currPage > numPages){
-                    sendChatLine(user, EChatColor.COLOR_RED + "" + "Page does not exist!  There are only " + numPages + " pages!");
+            }
+            if(currPage > numPages){
+                sendChatLine(user, EChatColor.COLOR_RED + "" + "Page does not exist!  There are only " + numPages + " pages!");
+            }else{
+                sendChatLine(user, EChatColor.COLOR_DARK_GREEN + "" + EChatColor.FORMAT_UNDERLINE + "Available TE functions (Page " +  + currPage + " of " + numPages + "):");
+                sendChatLine(user, "");
+                Object[] functions = baseCommand.functionList.values().toArray();
+                for(int index = 6 * (currPage - 1); index < 6 * currPage && index < baseCommand.functionList.size(); index++){
+                    BaseFunction function = (BaseFunction)functions[index];
+                    sendChatLine(user, EChatColor.COLOR_YELLOW + function.getFunctionName() + EChatColor.COLOR_ORANGE + " - " + function.getFunctionDescription());
                 }
             }
         }catch(NumberFormatException e){
             sendChatLine(user, EChatColor.COLOR_RED + "" + "Invalid page number!  Must be an integer!");
         }
-        sendChatLine(user, EChatColor.COLOR_DARK_GREEN + "" + EChatColor.FORMAT_UNDERLINE + "Available TE functions (Page " +  + currPage + " of " + numPages + "):");
-        sendChatLine(user, "");
-        Object[] functions = baseCommand.functionList.values().toArray();
-        for(int index = 6 * (currPage - 1); index < 6 * currPage && index < baseCommand.functionList.size(); index++){
-            BaseFunction function = (BaseFunction)functions[index];
-            sendChatLine(user, EChatColor.COLOR_YELLOW + function.getFunctionName() + EChatColor.COLOR_ORANGE + " - " + function.getFunctionDescription());
-        }
+
     }
 
     /**
