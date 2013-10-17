@@ -1,0 +1,1 @@
+TerrainEdit is a command-line based terrain edit mod for Minecraft.  It allows the use of commands to perform large area terrain-changing functions such as generating terrain, setting blocks, and more!  It requires only BlazeLoader to run.
