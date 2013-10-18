@@ -1,6 +1,5 @@
 package net.acomputerdog.TerrainEdit.functions;
 
-import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
@@ -39,11 +38,11 @@ public class FunctionSetAt extends BaseFunction {
                 int y = Integer.parseInt(args[2]);
                 int z = Integer.parseInt(args[3]);
                 int id = Integer.parseInt(args[4]);
-                int data = 0;
+                int meta = 0;
                 if(args.length >= 6){
-                    data = Integer.parseInt(args[5]);
+                    meta = Integer.parseInt(args[5]);
                 }
-                ApiBlock.setBlock(user.getEntityWorld(), x - 1, y, z - 1, id, data, ENotificationType.NOTIFY_CLIENTS.getType());
+                user.getEntityWorld().setBlock(x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
                 sendChatLine(user, EChatColor.COLOR_YELLOW + "Set block successfully!");
             }catch(NumberFormatException e){
                 sendChatLine(user, EChatColor.COLOR_RED + "Invalid args!  Use /te setat <x> <y> <z> <block_id> [metadata]");

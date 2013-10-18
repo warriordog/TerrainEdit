@@ -1,6 +1,5 @@
 package net.acomputerdog.TerrainEdit.functions;
 
-import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
@@ -48,7 +47,7 @@ public class FunctionSet extends BaseFunction{
                     for(int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++){
                         for(int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++){
                             for(int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++){
-                                ApiBlock.setBlock(user.getEntityWorld(), x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                user.getEntityWorld().setBlock(x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
                             }
                         }
                     }
