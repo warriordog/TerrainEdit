@@ -5,6 +5,10 @@ import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.minecraft.src.ICommandSender;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+
 /**
  * A function to return a list of all TE functions and their descriptions.
  */
@@ -45,6 +49,12 @@ public class FunctionHelp extends BaseFunction {
                 sendChatLine(user, EChatColor.COLOR_DARK_GREEN + "" + EChatColor.FORMAT_UNDERLINE + "Available TE functions (Page " +  + currPage + " of " + numPages + "):");
                 sendChatLine(user, "");
                 Object[] functions = baseCommand.functionList.values().toArray();
+                Collections.sort(Arrays.asList(functions), new Comparator<Object>() {
+                    @Override
+                    public int compare(Object o1, Object o2) {
+                        return ((BaseFunction)o1).getFunctionName().compareTo(((BaseFunction)o2).getFunctionName());
+                    }
+                });
                 for(int index = 6 * (currPage - 1); index < 6 * currPage && index < baseCommand.functionList.size(); index++){
                     BaseFunction function = (BaseFunction)functions[index];
                     sendChatLine(user, EChatColor.COLOR_YELLOW + function.getFunctionName() + EChatColor.COLOR_ORANGE + " - " + function.getFunctionDescription());
