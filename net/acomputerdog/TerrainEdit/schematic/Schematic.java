@@ -20,8 +20,6 @@ public class Schematic{
 	NBTTagList entities;
 	NBTTagList tileEntities;
 
-	String version = "0.2";	
-
     public Schematic(File path){
         try{
             this.schematic = CompressedStreamTools.readCompressed(new FileInputStream(path));
