@@ -43,7 +43,6 @@ public class FunctionSet extends BaseFunction{
                     if(args.length >= 3){
                         meta = Integer.parseInt(args[2]);
                     }
-                    sendChatLine(user, EChatColor.COLOR_YELLOW + "Settings blocks...");
                     for(int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++){
                         for(int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++){
                             for(int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++){
