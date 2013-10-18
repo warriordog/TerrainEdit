@@ -15,16 +15,6 @@ public class FunctionHelp extends BaseFunction {
     }
 
     /**
-     * Gets the number of arguments required.  For a varied amount return 0 and process manually.
-     *
-     * @return Return the number of required args.
-     */
-    @Override
-    public int getNumRequiredArgs() {
-        return 0;
-    }
-
-    /**
      * Gets the name of the function.
      *
      * @return Return the name of the function.
@@ -42,17 +32,6 @@ public class FunctionHelp extends BaseFunction {
     @Override
     public String getUsage() {
         return "help [page]";
-    }
-
-    /**
-     * Checks if the user has the required permissions to use the command.
-     *
-     * @param user The user attempting to perform the commands.
-     * @return Return true if the user can use the command, false if not.
-     */
-    @Override
-    public boolean canUserUseCommand(ICommandSender user) {
-        return user.canCommandSenderUseCommand(4, "te");
     }
 
     /**

@@ -2,8 +2,7 @@ package net.acomputerdog.TerrainEdit.main;
 
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.BlazeLoader.api.command.BLCommandBase;
-import net.acomputerdog.TerrainEdit.functions.BaseFunction;
-import net.acomputerdog.TerrainEdit.functions.FunctionHelp;
+import net.acomputerdog.TerrainEdit.functions.*;
 import net.minecraft.src.ICommandSender;
 
 import java.util.HashMap;
@@ -17,6 +16,8 @@ public class CommandTE extends BLCommandBase {
         super();
         this.baseMod = baseMod;
         new FunctionHelp(baseMod, this);
+        new FunctionP1(baseMod, this);
+        new FunctionP2(baseMod, this);
     }
 
     /**

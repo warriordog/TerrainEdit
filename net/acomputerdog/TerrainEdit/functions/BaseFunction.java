@@ -20,12 +20,6 @@ public abstract class BaseFunction {
     }
 
     /**
-     * Gets the number of arguments required.  For a varied amount return 0 and process manually.
-     * @return Return the number of required args.
-     */
-    public abstract int getNumRequiredArgs();
-
-    /**
      * Gets the name of the function.
      * @return Return the name of the function.
      */
@@ -36,13 +30,6 @@ public abstract class BaseFunction {
      * @return Return the usage of the function.
      */
     public abstract String getUsage();
-
-    /**
-     * Checks if the user has the required permissions to use the command.
-     * @param user The user attempting to perform the commands.
-     * @return Return true if the user can use the command, false if not.
-     */
-    public abstract boolean canUserUseCommand(ICommandSender user);
 
     /**
      * Executes the command.
@@ -57,16 +44,6 @@ public abstract class BaseFunction {
      * @return Return a concise description of what the function does.
      */
     public abstract String getFunctionDescription();
-
-    /**
-     * Checks if the command sender is allowed to use the command.
-     * @param sender The command user.
-     * @param permissionLevel The permission level required.
-     * @return Return true if the user can use the command, false if not.
-     */
-    protected boolean doesSenderHaveRequiredPermissions(ICommandSender sender, int permissionLevel){
-        return sender.canCommandSenderUseCommand(permissionLevel, "bl");
-    }
 
     /**
      * Sends chat to a command user.
