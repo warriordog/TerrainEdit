@@ -18,6 +18,7 @@ public class CommandTE extends BLCommandBase {
         new FunctionHelp(baseMod, this);
         new FunctionP1(baseMod, this);
         new FunctionP2(baseMod, this);
+        new FunctionSet(baseMod, this);
     }
 
     /**
