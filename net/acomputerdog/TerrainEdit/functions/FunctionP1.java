@@ -41,6 +41,12 @@ public class FunctionP1 extends BaseFunction {
         cuboid.setXPos1(loc.posX);
         cuboid.setYPos1(loc.posY);
         cuboid.setZPos1(loc.posZ);
+        if(!cuboid.getIsSet()){
+            cuboid.setXPos2(loc.posX);
+            cuboid.setYPos2(loc.posY);
+            cuboid.setZPos2(loc.posZ);
+            cuboid.setIsSet(true);
+        }
         sendChatLine(user, EChatColor.COLOR_YELLOW + "Set cuboid position 1 to: " + loc.posX + ", " + loc.posY + ", " + loc.posZ + ".");
     }
 
