@@ -25,16 +25,6 @@ public class FunctionHelp extends BaseFunction {
     }
 
     /**
-     * Gets the usage of the function.
-     *
-     * @return Return the usage of the function.
-     */
-    @Override
-    public String getUsage() {
-        return "help [page]";
-    }
-
-    /**
      * Executes the command.
      *
      * @param user The user executing the command.

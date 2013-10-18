@@ -28,16 +28,6 @@ public class FunctionP2 extends BaseFunction {
     }
 
     /**
-     * Gets the usage of the function.
-     *
-     * @return Return the usage of the function.
-     */
-    @Override
-    public String getUsage() {
-        return "p2";
-    }
-
-    /**
      * Executes the command.
      *
      * @param user The user executing the command.

@@ -26,12 +26,6 @@ public abstract class BaseFunction {
     public abstract String getFunctionName();
 
     /**
-     * Gets the usage of the function.
-     * @return Return the usage of the function.
-     */
-    public abstract String getUsage();
-
-    /**
      * Executes the command.
      * @param user The user executing the command.
      * @param args The arguments passed to the module.
