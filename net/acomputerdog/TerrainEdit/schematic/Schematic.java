@@ -1,18 +1,12 @@
 package net.acomputerdog.TerrainEdit.schematic;
 
-import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
-import net.minecraft.src.CompressedStreamTools;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityList;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.NBTTagFloat;
-import net.minecraft.src.NBTTagList;
-import net.minecraft.src.TileEntity;
-import java.io.*;
+import net.minecraft.src.*;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class Schematic{
 	NBTTagCompound schematic;
@@ -46,59 +40,45 @@ public class Schematic{
         }
     }
 
-    public void place(int x, int y, int z, int d){
+    public void place(World world, int x, int y, int z){
         try{
             int currBlock = 0;
             //For loops MUST stay in order!!
             for (int currY = y; currY < y + height; currY++){
                 for (int currZ = z; currZ < z + length; currZ++){
                     for (int currX = x; currX < x + width; currX++){
-                        ApiBlock.setBlock(d, currX, currY, currZ, blocks[currBlock], data[currBlock], ENotificationType.NOTIFY_CLIENTS.getType());
+                        world.setBlock(currX, currY, currZ, blocks[currBlock], data[currBlock], ENotificationType.NOTIFY_CLIENTS.getType());
                         currBlock++;
                     }
                 }
             }
 
-            /*
             Collection<TileEntity> tileEntityCollection = new ArrayList<TileEntity>();
 
             for (int count = 0; count < tileEntities.tagCount(); count++){
                 TileEntity currTileEntity = TileEntity.createAndLoadEntity((NBTTagCompound)tileEntities.tagAt(count));
-
                 if (currTileEntity != null){
                     currTileEntity.xCoord = currTileEntity.xCoord + length;
                     currTileEntity.yCoord = currTileEntity.yCoord + height;
                     currTileEntity.zCoord = currTileEntity.zCoord + width;
-                    tileEntityCollection.add(currTileEntity)
+                    tileEntityCollection.add(currTileEntity);
                 }
             }
+            world.addTileEntity(tileEntityCollection);
 
-            worldServers[d].addTileEntity(tileEntityCollection);//add the tile entity collection to world
-            //end load tile entities--------------------------------------------------
-            //load entities-----------------------------------------------------------
-            List entityCollection = new ArrayList<EntityList>();// list to hold entities
-
-            for (int count = 0; count < entities.tagCount(); count++)//count tile entities in schematic
-            {
-                NBTTagCompound currTag = (NBTTagCompound)entities.tagAt(count);//gets entity's tags
-                NBTTagList currRot = currTag.getTagList("Rotation");//get entity rotation
-                Entity currEntity = EntityList.createEntityByName((currTag.getString("id")), worldServers[d]);//create a new entity
-
-                if (currEntity != null)
-                {
-                    //set the rotation and position of entity
+            for (int count = 0; count < entities.tagCount(); count++){
+                NBTTagCompound currTag = (NBTTagCompound)entities.tagAt(count);
+                NBTTagList currRot = currTag.getTagList("Rotation");
+                Entity currEntity = EntityList.createEntityByName((currTag.getString("id")), world);
+                if (currEntity != null){
                     currEntity.setLocationAndAngles(x, y, z, ((NBTTagFloat)currRot.tagAt(0)).data, ((NBTTagFloat)currRot.tagAt(1)).data);
-                    currEntity.setAir(currTag.getShort("Air"));//sets the entity's air
-                    currEntity.setFire(currTag.getShort("Fire"));//sets the entity' fire
-                    currEntity.fallDistance = (currTag.getFloat("FallDistance")); //sets the entity's fall distance
-                    currEntity.onGround = (currTag.getBoolean("OnGround")); //sets weather the entity is on the ground
-                    worldServers[d].spawnEntityInWorld(currEntity);//add entity to world
+                    currEntity.setAir(currTag.getShort("Air"));
+                    currEntity.setFire(currTag.getShort("Fire"));
+                    currEntity.fallDistance = (currTag.getFloat("FallDistance"));
+                    currEntity.onGround = (currTag.getBoolean("OnGround"));
+                    world.spawnEntityInWorld(currEntity);
                 }
             }
-
-            //end load entities----------------------------------------------------------
-            return true;
-            */
         }
         catch (Exception e){
             throw new RuntimeException("Exception placing schematic!", e);
