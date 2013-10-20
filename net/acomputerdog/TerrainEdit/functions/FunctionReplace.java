@@ -9,6 +9,9 @@ import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.minecraft.src.ICommandSender;
 import net.minecraft.src.World;
 
+/**
+ * Function that replaces all blocks in the cuboid of a specific type with another type.
+ */
 public class FunctionReplace extends BaseFunction{
     public FunctionReplace(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);

@@ -10,8 +10,11 @@ import net.minecraft.src.ICommandSender;
 
 import java.util.Random;
 
+/**
+ * Function that generates terrain based on random numbers and a percent chance.  Uses the seed "TerrainEdit".
+ */
 public class FunctionGenRan extends BaseFunction{
-    Random random = new Random("TerrainEdit".hashCode());
+    private Random random = new Random("TerrainEdit".hashCode());
 
     public FunctionGenRan(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);

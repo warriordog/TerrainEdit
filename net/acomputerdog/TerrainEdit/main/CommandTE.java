@@ -8,6 +8,9 @@ import net.minecraft.src.ICommandSender;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The base command for TerrainEdit.  Loads functions as sub-commands.
+ */
 public class CommandTE extends BLCommandBase {
     protected ModTerrainEdit baseMod;
     public Map<String, BaseFunction> functionList = new HashMap<String, BaseFunction>();

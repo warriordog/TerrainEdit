@@ -9,6 +9,9 @@ import net.minecraft.src.ICommandSender;
 
 import java.io.File;
 
+/**
+ * Loads a schematic and imports it into the world.  Currently uses very old and buggy schematic loading code that will be replaced soon.
+ */
 public class FunctionSchemLoad extends BaseFunction {
     public FunctionSchemLoad(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);

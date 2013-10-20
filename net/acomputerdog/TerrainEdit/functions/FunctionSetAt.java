@@ -6,6 +6,9 @@ import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.minecraft.src.ICommandSender;
 
+/**
+ * Sets the block at a specific location to a given type.
+ */
 public class FunctionSetAt extends BaseFunction {
     public FunctionSetAt(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);

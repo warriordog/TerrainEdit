@@ -8,6 +8,9 @@ import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.minecraft.src.ICommandSender;
 
+/**
+ * Sets all the blocks in the cuboid to a particular type.
+ */
 public class FunctionSet extends BaseFunction{
     public FunctionSet(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);

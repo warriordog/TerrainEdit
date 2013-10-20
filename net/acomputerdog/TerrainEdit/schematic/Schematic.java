@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Deprecated
+/**
+ * Represents a schematic.  Very old and buggy code.  Must be tied to a File that contains the schematic.
+ */
 public class Schematic{
 	NBTTagCompound schematic;
 	short height;

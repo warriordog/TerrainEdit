@@ -5,6 +5,9 @@ import net.acomputerdog.BlazeLoader.main.Version;
 import net.acomputerdog.BlazeLoader.mod.Mod;
 import net.acomputerdog.BlazeLoader.util.BLLogger;
 
+/**
+ * Base mod class for TerrainEdit.  Registers CommandTE.
+ */
 public class ModTerrainEdit extends Mod {
     public CommandTE command;
     public BLLogger logger = new BLLogger(this, true, true);
