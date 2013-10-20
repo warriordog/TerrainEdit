@@ -1,0 +1,6 @@
+These are not in order (but newest are on bottom):
+
+-Add undo support
+-Add Functions for terrain generation
+-Rewrite schematic file handling
+-Add Function for saving a schematic
