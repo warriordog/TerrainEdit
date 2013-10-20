@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@Deprecated
 public class Schematic{
 	NBTTagCompound schematic;
 	short height;

@@ -37,7 +37,7 @@ public class FunctionHelp extends BaseFunction {
      */
     @Override
     public void execute(ICommandSender user, String[] args) {
-        int numPages = Math.max(baseCommand.functionList.size() / 6, 1);
+        int numPages = Math.max((baseCommand.functionList.size() / 6) + 1, 1);
         int currPage = 1;
         try{
             if(args.length >= 2){
