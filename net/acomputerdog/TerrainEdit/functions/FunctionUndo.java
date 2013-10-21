@@ -9,7 +9,7 @@ import net.minecraft.src.ICommandSender;
 /**
  * Allows the user to undo TE changes.  Not currently user-specific!
  */
-public class FunctionUndo extends BaseFunction{
+public class FunctionUndo extends Function {
     public FunctionUndo(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
     }

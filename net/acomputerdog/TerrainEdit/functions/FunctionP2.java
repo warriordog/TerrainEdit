@@ -11,7 +11,7 @@ import net.minecraft.src.ICommandSender;
 /**
  * Sets the second cuboid position.
  */
-public class FunctionP2 extends BaseFunction {
+public class FunctionP2 extends Function {
 
     public FunctionP2(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);

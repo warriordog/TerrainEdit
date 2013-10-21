@@ -10,7 +10,7 @@ import net.minecraft.src.ICommandSender;
 /**
  * Sets the block at a specific location to a given type.
  */
-public class FunctionSetAt extends BaseFunction {
+public class FunctionSetAt extends Function {
     public FunctionSetAt(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
     }

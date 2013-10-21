@@ -14,7 +14,7 @@ import java.util.Random;
 /**
  * Function that generates terrain based on random numbers and a percent chance.  Uses the seed "TerrainEdit".
  */
-public class FunctionGenRan extends BaseFunction{
+public class FunctionGenRan extends Function {
     private Random random = new Random("TerrainEdit".hashCode());
 
     public FunctionGenRan(ModTerrainEdit baseMod, CommandTE baseCommand) {

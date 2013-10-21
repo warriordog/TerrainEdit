@@ -13,7 +13,7 @@ import net.minecraft.src.World;
 /**
  * Function that replaces all blocks in the cuboid of a specific type with another type.
  */
-public class FunctionReplace extends BaseFunction{
+public class FunctionReplace extends Function {
     public FunctionReplace(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
     }

@@ -12,7 +12,7 @@ import net.minecraft.src.ICommandSender;
 /**
  * Function that deletes the blocks in the cuboid.
  */
-public class FunctionDelete extends BaseFunction {
+public class FunctionDelete extends Function {
     public FunctionDelete(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
     }

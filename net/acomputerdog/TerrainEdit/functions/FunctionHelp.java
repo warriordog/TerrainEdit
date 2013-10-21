@@ -12,7 +12,7 @@ import java.util.Comparator;
 /**
  * A function to return a list of all TE functions and their descriptions.
  */
-public class FunctionHelp extends BaseFunction {
+public class FunctionHelp extends Function {
 
     public FunctionHelp(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
@@ -52,11 +52,11 @@ public class FunctionHelp extends BaseFunction {
                 Collections.sort(Arrays.asList(functions), new Comparator<Object>() {
                     @Override
                     public int compare(Object o1, Object o2) {
-                        return ((BaseFunction)o1).getFunctionName().compareTo(((BaseFunction)o2).getFunctionName());
+                        return ((Function)o1).getFunctionName().compareTo(((Function)o2).getFunctionName());
                     }
                 });
                 for(int index = 6 * (currPage - 1); index < 6 * currPage && index < baseCommand.functionList.size(); index++){
-                    BaseFunction function = (BaseFunction)functions[index];
+                    Function function = (Function)functions[index];
                     sendChatLine(user, EChatColor.COLOR_YELLOW + function.getFunctionName() + EChatColor.COLOR_ORANGE + " - " + function.getFunctionDescription());
                 }
             }

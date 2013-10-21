@@ -9,11 +9,11 @@ import net.minecraft.src.ICommandSender;
 /**
  * Base class for /te functions
  */
-public abstract class BaseFunction {
+public abstract class Function {
     protected ModTerrainEdit baseMod;
     protected CommandTE baseCommand;
 
-    public BaseFunction(ModTerrainEdit baseMod, CommandTE baseCommand) {
+    public Function(ModTerrainEdit baseMod, CommandTE baseCommand) {
         this.baseMod = baseMod;
         this.baseCommand = baseCommand;
         baseCommand.functionList.put(this.getFunctionName(), this);

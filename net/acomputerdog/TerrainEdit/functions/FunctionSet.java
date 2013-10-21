@@ -12,7 +12,7 @@ import net.minecraft.src.ICommandSender;
 /**
  * Sets all the blocks in the cuboid to a particular type.
  */
-public class FunctionSet extends BaseFunction{
+public class FunctionSet extends Function {
     public FunctionSet(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
     }

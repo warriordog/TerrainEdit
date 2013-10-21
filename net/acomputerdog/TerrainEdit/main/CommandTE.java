@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class CommandTE extends BLCommandBase {
     protected ModTerrainEdit baseMod;
-    public Map<String, BaseFunction> functionList = new HashMap<String, BaseFunction>();
+    public Map<String, Function> functionList = new HashMap<String, Function>();
 
     public CommandTE(ModTerrainEdit baseMod){
         super();
@@ -53,7 +53,7 @@ public class CommandTE extends BLCommandBase {
         if(args.length == 0){
             sendChatLine(user, EChatColor.COLOR_RED + "Please specify a function using /te [function [args]].  Use /te help for more info.");
         }else{
-            BaseFunction function = functionList.get(args[0]);
+            Function function = functionList.get(args[0]);
             if(function != null){
                 function.execute(user, args);
             }else{
