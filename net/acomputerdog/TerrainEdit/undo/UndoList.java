@@ -1,5 +1,6 @@
 package net.acomputerdog.TerrainEdit.undo;
 
+import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
 import net.minecraft.src.World;
 
 import java.util.ArrayList;
@@ -35,5 +36,9 @@ public class UndoList {
 
     public static void setMaxEntries(int maxEntries){
         UndoList.maxEntries = maxEntries;
+    }
+
+    public static void createUndoTask(World world, Cuboid cuboid){
+        addTask(new UndoItem(cuboid, world));
     }
 }
