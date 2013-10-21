@@ -6,6 +6,7 @@ import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
 import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
+import net.acomputerdog.TerrainEdit.undo.UndoList;
 import net.minecraft.src.ICommandSender;
 import net.minecraft.src.World;
 
@@ -55,6 +56,7 @@ public class FunctionReplace extends BaseFunction{
                         meta2 = Integer.parseInt(args[4]);
                     }
                     World world = user.getEntityWorld();
+                    UndoList.createUndoTask(world, cuboid);
                     for(int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++){
                         for(int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++){
                             for(int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++){

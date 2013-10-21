@@ -41,4 +41,8 @@ public class UndoList {
     public static void createUndoTask(World world, Cuboid cuboid){
         addTask(new UndoTask(cuboid, world));
     }
+
+    public static void createUndoTask(World world, int x1 ,int y1, int z1, int x2, int y2, int z2){
+        addTask(new UndoTask(x1, y1, z1, x2, y2, z2, world));
+    }
 }

@@ -4,6 +4,7 @@ import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
+import net.acomputerdog.TerrainEdit.undo.UndoList;
 import net.minecraft.src.ICommandSender;
 
 /**
@@ -45,6 +46,7 @@ public class FunctionSetAt extends BaseFunction {
                 if(args.length >= 6){
                     meta = Integer.parseInt(args[5]);
                 }
+                UndoList.createUndoTask(user.getEntityWorld(), x, y, z, x, y, z);
                 user.getEntityWorld().setBlock(x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
                 sendChatLine(user, EChatColor.COLOR_YELLOW + "Set block successfully!");
             }catch(NumberFormatException e){

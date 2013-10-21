@@ -11,6 +11,7 @@ import java.io.File;
 
 /**
  * Loads a schematic and imports it into the world.  Currently uses very old and buggy schematic loading code that will be replaced soon.
+ * Cannot currently be undone!
  */
 public class FunctionSchemLoad extends BaseFunction {
     public FunctionSchemLoad(ModTerrainEdit baseMod, CommandTE baseCommand) {

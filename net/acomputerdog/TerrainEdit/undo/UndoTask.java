@@ -19,12 +19,12 @@ public class UndoTask {
         this.x2 = x2;
         this.y2 = y2;
         this.z2 = z2;
-        blockIDs = new int[Math.abs(x2 - x1) * Math.abs(y2 - y1) * Math.abs(z2 - z1)];
-        blockDATAs = new int[Math.abs(x2 - x1) * Math.abs(y2 - y1) * Math.abs(z2 - z1)];
+        blockIDs = new int[(Math.abs(x2 - x1) + 1) * (Math.abs(y2 - y1) + 1) * (Math.abs(z2 - z1) + 1)];
+        blockDATAs = new int[(Math.abs(x2 - x1) + 1) * (Math.abs(y2 - y1) + 1) * (Math.abs(z2 - z1) + 1)];
         int currIndex = 0;
-        for(int currX = x1; currX <= x2; currX++){
-            for(int currY = y1; currY <= y2; currY++){
-                for(int currZ = z1; currZ <= z2; currZ++){
+        for(int currX = Math.min(x1, x2); currX <= Math.max(x2, x1); currX++){
+            for(int currY = Math.min(y1, y2); currY <= Math.max(y2, y1); currY++){
+                for(int currZ = Math.min(z1, z2); currZ <= Math.max(z2, z1); currZ++){
                     blockIDs[currIndex] = world.getBlockId(currX, currY, currZ);
                     blockDATAs[currIndex] = world.getBlockMetadata(currX, currY, currZ);
                     currIndex++;
@@ -40,12 +40,12 @@ public class UndoTask {
         this.x2 = cuboid.getXPos2();
         this.y2 = cuboid.getYPos2();
         this.z2 = cuboid.getZPos2();
-        blockIDs = new int[Math.abs(x2 - x1) * Math.abs(y2 - y1) * Math.abs(z2 - z1)];
-        blockDATAs = new int[Math.abs(x2 - x1) * Math.abs(y2 - y1) * Math.abs(z2 - z1)];
+        blockIDs = new int[(Math.abs(x2 - x1) + 1) * (Math.abs(y2 - y1) + 1) * (Math.abs(z2 - z1) + 1)];
+        blockDATAs = new int[(Math.abs(x2 - x1) + 1) * (Math.abs(y2 - y1) + 1) * (Math.abs(z2 - z1) + 1)];
         int currIndex = 0;
-        for(int currX = x1; currX <= x2; currX++){
-            for(int currY = y1; currY <= y2; currY++){
-                for(int currZ = z1; currZ <= z2; currZ++){
+        for(int currX = Math.min(x1, x2); currX <= Math.max(x2, x1); currX++){
+            for(int currY = Math.min(y1, y2); currY <= Math.max(y2, y1); currY++){
+                for(int currZ = Math.min(z1, z2); currZ <= Math.max(z2, z1); currZ++){
                     blockIDs[currIndex] = world.getBlockId(currX, currY, currZ);
                     blockDATAs[currIndex] = world.getBlockMetadata(currX, currY, currZ);
                     currIndex++;
@@ -56,9 +56,9 @@ public class UndoTask {
 
     public void undo(World world){
         int currIndex = 0;
-        for(int currX = x1; currX <= x2; currX++){
-            for(int currY = y1; currY <= y2; currY++){
-                for(int currZ = z1; currZ <= z2; currZ++){
+        for(int currX = Math.min(x1, x2); currX <= Math.max(x2, x1); currX++){
+            for(int currY = Math.min(y1, y2); currY <= Math.max(y2, y1); currY++){
+                for(int currZ = Math.min(z1, z2); currZ <= Math.max(z2, z1); currZ++){
                     world.setBlock(currX, currY, currZ, blockIDs[currIndex], blockDATAs[currIndex], ENotificationType.NOTIFY_CLIENTS.getType());
                     currIndex++;
                 }
