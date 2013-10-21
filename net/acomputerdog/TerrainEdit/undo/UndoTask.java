@@ -5,14 +5,14 @@ import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
 import net.minecraft.src.World;
 
 /**
- * An undo item.  Stores a list of block information to perform undo operations.
+ * A task to perform when undoing an action.
  */
-public class UndoItem {
+public class UndoTask {
     private int x1, y1, z1, x2, y2, z2;
     private int[] blockIDs;
     private int[] blockDATAs;
 
-    public UndoItem(int x1, int y1, int z1, int x2, int y2, int z2, World world) {
+    public UndoTask(int x1, int y1, int z1, int x2, int y2, int z2, World world) {
         this.x1 = x1;
         this.y1 = y1;
         this.z1 = z1;
@@ -33,7 +33,7 @@ public class UndoItem {
         }
     }
 
-    public UndoItem(Cuboid cuboid, World world) {
+    public UndoTask(Cuboid cuboid, World world) {
         this.x1 = cuboid.getXPos1();
         this.y1 = cuboid.getYPos1();
         this.z1 = cuboid.getZPos1();
