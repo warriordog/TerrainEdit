@@ -2,6 +2,7 @@ package net.acomputerdog.TerrainEdit.functions;
 
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
+import net.acomputerdog.TerrainEdit.config.Config;
 import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
 import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
@@ -68,7 +69,9 @@ public class FunctionReplace extends Function {
                             }
                         }
                     }
-                    sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+                    if(Config.getConfigForPlayer(user.getCommandSenderName()).commandConfirmation){
+                        sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+                    }
                 }else{
                     sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
                 }

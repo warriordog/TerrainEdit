@@ -1,6 +1,7 @@
 package net.acomputerdog.TerrainEdit.functions;
 
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
+import net.acomputerdog.TerrainEdit.config.Config;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.schematic.Schematic;
@@ -55,7 +56,9 @@ public class FunctionSchemLoad extends Function {
                     }else if(args.length >= 5){
                         try{
                             new Schematic(schematic).place(user.getEntityWorld(), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[2]));
-                            sendChatLine(user, EChatColor.COLOR_YELLOW + "Placed schematic.");
+                            if(Config.getConfigForPlayer(user.getCommandSenderName()).commandConfirmation){
+                                sendChatLine(user, EChatColor.COLOR_YELLOW + "Placed schematic.");
+                            }
                         }catch(Exception e){
                             sendChatLine(user, EChatColor.COLOR_RED.toString() + EChatColor.FORMAT_BOLD.toString() + EChatColor.FORMAT_UNDERLINE.toString() + "Unable to place schematic!");
                             e.printStackTrace();

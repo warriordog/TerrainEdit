@@ -2,6 +2,7 @@ package net.acomputerdog.TerrainEdit.functions;
 
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
+import net.acomputerdog.TerrainEdit.config.Config;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.undo.UndoList;
@@ -48,7 +49,9 @@ public class FunctionSetAt extends Function {
                 }
                 UndoList.createUndoTask(user.getEntityWorld(), x, y, z, x, y, z);
                 user.getEntityWorld().setBlock(x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
-                sendChatLine(user, EChatColor.COLOR_YELLOW + "Set block successfully!");
+                if(Config.getConfigForPlayer(user.getCommandSenderName()).commandConfirmation){
+                    sendChatLine(user, EChatColor.COLOR_YELLOW + "Set block successfully!");
+                }
             }catch(NumberFormatException e){
                 sendChatLine(user, EChatColor.COLOR_RED + "Invalid args!  Use /te setat <x> <y> <z> <block_id> [metadata]");
             }catch(Exception e){

@@ -1,6 +1,7 @@
 package net.acomputerdog.TerrainEdit.functions;
 
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
+import net.acomputerdog.TerrainEdit.config.Config;
 import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
 import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
@@ -47,7 +48,9 @@ public class FunctionP1 extends Function {
             cuboid.setZPos2(loc.posZ);
             cuboid.setIsSet(true);
         }
-        sendChatLine(user, EChatColor.COLOR_YELLOW + "Set cuboid position 1 to: " + loc.posX + ", " + loc.posY + ", " + loc.posZ + ".");
+        if(Config.getConfigForPlayer(user.getCommandSenderName()).commandConfirmation){
+            sendChatLine(user, EChatColor.COLOR_YELLOW + "Set cuboid position 1 to: " + loc.posX + ", " + loc.posY + ", " + loc.posZ + ".");
+        }
     }
 
     /**

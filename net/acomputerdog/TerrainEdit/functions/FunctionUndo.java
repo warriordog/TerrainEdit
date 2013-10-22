@@ -1,6 +1,7 @@
 package net.acomputerdog.TerrainEdit.functions;
 
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
+import net.acomputerdog.TerrainEdit.config.Config;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.undo.UndoList;
@@ -36,7 +37,9 @@ public class FunctionUndo extends Function {
         try{
             if(UndoList.hasTask()){
                 UndoList.undoLastTask(user.getEntityWorld());
-                sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+                if(Config.getConfigForPlayer(user.getCommandSenderName()).commandConfirmation){
+                    sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+                }
             }else{
                 sendChatLine(user, EChatColor.COLOR_RED + "There is nothing to undo!");
             }
