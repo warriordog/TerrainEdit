@@ -78,7 +78,7 @@ public class ModTerrainEdit extends Mod {
     */
     @Override
     public String getModDescription() {
-        return "A command-line terrain editor";
+        return "A command-line terrain editor.";
     }
 
     /**
