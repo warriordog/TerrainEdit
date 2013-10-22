@@ -11,6 +11,7 @@ import net.acomputerdog.BlazeLoader.util.BLLogger;
 public class ModTerrainEdit extends Mod {
     public CommandTE command;
     public BLLogger logger = new BLLogger(this, true, true);
+    public static ModTerrainEdit instance;
 
     /**
      * Returns ID used to identify this mod internally, even among different versions of the same mod.  Mods should override.
@@ -88,5 +89,13 @@ public class ModTerrainEdit extends Mod {
     public void start() {
         ApiCommand.registerCommand(command = new CommandTE(this));
         logger.logInfo("Loaded.");
+    }
+
+    /**
+     * Called when mod is loaded.  Called before game is loaded.
+     */
+    @Override
+    public void load() {
+        instance = this;
     }
 }
