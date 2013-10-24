@@ -11,6 +11,9 @@ import net.acomputerdog.TerrainEdit.undo.UndoList;
 import net.minecraft.src.ICommandSender;
 import net.minecraft.src.World;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * A function that adds a layer of blocks to the cuboid.
  */
@@ -39,15 +42,22 @@ public class FunctionLayer extends Function {
     @Override
     public void execute(ICommandSender user, String[] args) {
         if(args.length < 2){
-            sendChatLine(user, EChatColor.COLOR_RED + "Not enough arguments!  Use /te layer <block_id> [metadata]");
+            sendChatLine(user, EChatColor.COLOR_RED + "Not enough arguments!  Use /te layer <block_id> [metadata] [switches]");
         }else{
             Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
             if(cuboid.getIsSet()){
                 try{
                     int id = Integer.parseInt(args[1]);
                     int meta = 0;
+                    boolean onlyOnExistingBlock = false;
                     if(args.length >= 3){
                         meta = Integer.parseInt(args[2]);
+                        if(args.length >= 4){
+                            List<String> switches = Arrays.asList(args[3].split("-"));
+                            if(switches.contains("b")){
+                                onlyOnExistingBlock = true;
+                            }
+                        }
                     }
                     UndoList.createUndoTask(user.getEntityWorld(), cuboid);
                     World world = user.getEntityWorld();
@@ -57,7 +67,12 @@ public class FunctionLayer extends Function {
                         for(int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++){
                             int y = getHighestBlock(world, x, z, maxY, minY - 1) + 1;
                             if(y <= maxY && y >= minY){
-                                world.setBlock(x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                if(!onlyOnExistingBlock){
+                                    world.setBlock(x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                }else if(world.getBlockId(x, y - 1, z) != 0){
+                                    world.setBlock(x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                }
+
                             }
                         }
                     }
@@ -65,7 +80,7 @@ public class FunctionLayer extends Function {
                         sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
                     }
                 }catch(NumberFormatException e){
-                    sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use Use /te layer <block_id> [metadata]");
+                    sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use Use /te layer <block_id> [metadata] [switches]");
                 }catch(Exception e){
                     sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while layering blocks!");
                     e.printStackTrace();
