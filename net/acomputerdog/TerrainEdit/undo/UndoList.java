@@ -10,10 +10,10 @@ import java.util.List;
  * A list of tasks to perform when undoing actions.
  */
 public class UndoList {
-    private static List<UndoTask> tasks = new ArrayList<UndoTask>();
+    private static List<WorldSection> tasks = new ArrayList<WorldSection>();
     private static int maxEntries = 5;
 
-    public static void addTask(UndoTask task){
+    public static void addTask(WorldSection task){
         tasks.add(task);
         if(tasks.size() > maxEntries){
             tasks.remove(0);
@@ -26,7 +26,7 @@ public class UndoList {
 
     public static void undoLastTask(World world){
         if(hasTask()){
-            tasks.remove(tasks.size() - 1).undo(world);
+            tasks.remove(tasks.size() - 1).writeInto(world);
         }
     }
 
@@ -39,10 +39,10 @@ public class UndoList {
     }
 
     public static void createUndoTask(World world, Cuboid cuboid){
-        addTask(new UndoTask(cuboid, world));
+        addTask(new WorldSection(cuboid, world));
     }
 
     public static void createUndoTask(World world, int x1 ,int y1, int z1, int x2, int y2, int z2){
-        addTask(new UndoTask(x1, y1, z1, x2, y2, z2, world));
+        addTask(new WorldSection(x1, y1, z1, x2, y2, z2, world));
     }
 }
