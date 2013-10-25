@@ -77,4 +77,28 @@ public class Cuboid {
     public boolean getIsSet(){
         return this.isSet;
     }
+
+    public int getMinX() {
+        return Math.min(xPos1, xPos2);
+    }
+
+    public int getMinY() {
+        return Math.min(yPos1, yPos2);
+    }
+
+    public int getMinZ() {
+        return Math.min(zPos1, zPos2);
+    }
+
+    public int getMaxX() {
+        return Math.max(xPos1, xPos2);
+    }
+
+    public int getMaxY() {
+        return Math.max(yPos1, yPos2);
+    }
+
+    public int getMaxZ() {
+        return Math.max(zPos1, zPos2);
+    }
 }
