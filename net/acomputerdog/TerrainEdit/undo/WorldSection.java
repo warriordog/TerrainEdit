@@ -31,8 +31,7 @@ public class WorldSection {
                     blockIDs[currIndex] = world.getBlockId(currX, currY, currZ);
                     blockDATAs[currIndex] = world.getBlockMetadata(currX, currY, currZ);
                     if(world.blockHasTileEntity(currX, currY, currZ)){
-                        System.out.println("Saving tile entity.");
-                        NBTTagCompound thisTile = new NBTTagCompound(currX + "," + currY + "," + currZ);
+                        NBTTagCompound thisTile = new NBTTagCompound("tile");
                         world.getBlockTileEntity(currX, currY, currZ).writeToNBT(thisTile);
                         tileEntities.setCompoundTag(currX + "," + currY + "," + currZ, thisTile);
                     }
@@ -53,7 +52,6 @@ public class WorldSection {
                 for(int currZ = Math.min(z1, z2); currZ <= Math.max(z2, z1); currZ++){
                     world.setBlock(currX, currY, currZ, blockIDs[currIndex], blockDATAs[currIndex], ENotificationType.NOTIFY_CLIENTS.getType());
                     if(world.blockHasTileEntity(currX, currY, currZ)){
-                        System.out.println("Loading tile entity.");
                         world.setBlockTileEntity(currX, currY, currZ, TileEntity.createAndLoadEntity(tileEntities.getCompoundTag(currX + "," + currY + "," + currZ)));
                     }
                     currIndex++;
