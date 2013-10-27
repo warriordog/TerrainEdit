@@ -29,6 +29,7 @@ public class CommandTE extends BLCommandBase {
         new FunctionSchemLoad(baseMod, this);
         new FunctionUndo(baseMod, this);
         new FunctionLayer(baseMod, this);
+        //new FunctionShift(baseMod, this);  //Temporarily disabled
     }
 
     /**
