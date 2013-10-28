@@ -3,7 +3,7 @@ package net.acomputerdog.TerrainEdit.main;
 import net.acomputerdog.BlazeLoader.api.command.ApiCommand;
 import net.acomputerdog.BlazeLoader.main.Version;
 import net.acomputerdog.BlazeLoader.mod.Mod;
-import net.acomputerdog.BlazeLoader.util.BLLogger;
+import net.acomputerdog.BlazeLoader.util.logger.BLLogger;
 
 /**
  * Base mod class for TerrainEdit.  Registers CommandTE.
@@ -66,7 +66,7 @@ public class ModTerrainEdit extends Mod {
         if(!Version.getMinecraftVersion().equals("1.6.4")){
             System.out.println("TerrainEdit - Incorrect Minecraft version, aborting launch!");
             return false;
-        }else if(!(Version.getGlobalVersion() == 0 && Version.getApiVersion() <= 11)){
+        }else if(!(Version.getGlobalVersion() == 0 && Version.getApiVersion() <= 13)){
             System.out.println("TerrainEdit - Incorrect BL version, bad things may happen!");
         }
         return true;
