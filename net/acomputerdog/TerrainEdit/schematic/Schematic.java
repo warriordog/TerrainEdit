@@ -1,7 +1,7 @@
 package net.acomputerdog.TerrainEdit.schematic;
 
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
-import net.minecraft.src.*;
+import net.minecraft.entity.EntityList;
 
 import java.io.File;
 import java.io.FileInputStream;
