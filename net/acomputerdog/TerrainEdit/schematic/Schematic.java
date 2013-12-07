@@ -1,7 +1,14 @@
 package net.acomputerdog.TerrainEdit.schematic;
 
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagFloat;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 import java.io.File;
 import java.io.FileInputStream;

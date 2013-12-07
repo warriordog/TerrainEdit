@@ -2,9 +2,9 @@ package net.acomputerdog.TerrainEdit.undo;
 
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 /**
  * A section of a world containing blocks, entities, and tile entities.

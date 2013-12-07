@@ -5,7 +5,7 @@ import net.acomputerdog.TerrainEdit.config.Config;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.undo.UndoList;
-import net.minecraft.src.ICommandSender;
+import net.minecraft.command.ICommandSender;
 
 /**
  * Allows the user to undo TE changes.  Not currently user-specific!

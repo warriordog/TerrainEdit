@@ -1,7 +1,7 @@
 package net.acomputerdog.TerrainEdit.undo;
 
 import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
-import net.minecraft.src.World;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;

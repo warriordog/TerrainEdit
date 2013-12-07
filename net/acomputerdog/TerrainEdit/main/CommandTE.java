@@ -3,7 +3,7 @@ package net.acomputerdog.TerrainEdit.main;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.BlazeLoader.api.command.BLCommandBase;
 import net.acomputerdog.TerrainEdit.functions.*;
-import net.minecraft.src.ICommandSender;
+import net.minecraft.command.ICommandSender;
 
 import java.util.HashMap;
 import java.util.Map;

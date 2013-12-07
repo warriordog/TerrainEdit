@@ -8,7 +8,7 @@ import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.undo.UndoList;
-import net.minecraft.src.ICommandSender;
+import net.minecraft.command.ICommandSender;
 
 import java.util.Random;
 

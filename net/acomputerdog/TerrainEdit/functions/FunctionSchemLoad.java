@@ -5,8 +5,8 @@ import net.acomputerdog.TerrainEdit.config.Config;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.schematic.Schematic;
-import net.minecraft.src.ChunkCoordinates;
-import net.minecraft.src.ICommandSender;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.util.ChunkCoordinates;
 
 import java.io.File;
 

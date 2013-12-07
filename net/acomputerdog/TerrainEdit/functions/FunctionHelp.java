@@ -3,7 +3,7 @@ package net.acomputerdog.TerrainEdit.functions;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
-import net.minecraft.src.ICommandSender;
+import net.minecraft.command.ICommandSender;
 
 import java.util.Arrays;
 import java.util.Collections;

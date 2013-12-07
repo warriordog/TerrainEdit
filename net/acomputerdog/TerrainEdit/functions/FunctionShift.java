@@ -8,8 +8,8 @@ import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.undo.UndoList;
-import net.minecraft.src.ICommandSender;
-import net.minecraft.src.World;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.world.World;
 
 import java.util.Arrays;
 import java.util.List;
