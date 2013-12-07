@@ -1,5 +1,6 @@
 package net.acomputerdog.TerrainEdit.functions;
 
+import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.TerrainEdit.config.Config;
@@ -8,6 +9,7 @@ import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.undo.UndoList;
+import net.minecraft.block.Block;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.world.World;
 
@@ -44,8 +46,8 @@ public class FunctionReplace extends Function {
             try{
                 Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
                 if(cuboid.getIsSet()){
-                    int id1 = Integer.parseInt(args[1]);
-                    int id2 = Integer.parseInt(args[2]);
+                    Block block1 = Block.func_149729_e(Integer.parseInt(args[1]));
+                    Block block2 = Block.func_149729_e(Integer.parseInt(args[2]));
                     boolean useMeta1 = false;
                     int meta1 = 0;
                     if(args.length >= 4){
@@ -61,9 +63,9 @@ public class FunctionReplace extends Function {
                     for(int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++){
                         for(int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++){
                             for(int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++){
-                                if(world.getBlockId(x, y, z) == id1){
+                                if(ApiBlock.getBlock(world, x, y, z) == block1){
                                     if(!useMeta1 || world.getBlockMetadata(x, y, z) == meta1){
-                                        world.setBlock(x, y, z, id2, meta2, ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlock(world, x, y, z, block2, meta2, ENotificationType.NOTIFY_CLIENTS.getType());
                                     }
                                 }
                             }

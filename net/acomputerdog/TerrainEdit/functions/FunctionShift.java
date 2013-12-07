@@ -1,5 +1,6 @@
 package net.acomputerdog.TerrainEdit.functions;
 
+import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.TerrainEdit.config.Config;
@@ -9,6 +10,7 @@ import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.undo.UndoList;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
@@ -65,11 +67,11 @@ public class FunctionShift extends Function {
                             for(int y = y2; dir ? y >= y1 : y <= y1; y = dir ? y-1 : y+1){
                                 if(allowShiftOutOfCuboid || (y + distance >= y2 && y + distance <= y1)){
                                     if(dir){
-                                        world.setBlock(x, y + distance, z, world.getBlockId(x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                        world.setBlock(x, y, z, 0, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlock(world, x, y + distance, z, ApiBlock.getBlock(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlock(world, x, y, z, Blocks.field_150350_a, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                                     }else{
-                                        world.setBlock(x, y - distance, z, world.getBlockId(x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                        world.setBlock(x, y, z, 0, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlock(world, x, y - distance, z, ApiBlock.getBlock(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlock(world, x, y, z, Blocks.field_150350_a, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                                     }
                                 }
                             }

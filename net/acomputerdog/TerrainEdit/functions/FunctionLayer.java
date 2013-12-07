@@ -1,5 +1,6 @@
 package net.acomputerdog.TerrainEdit.functions;
 
+import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.TerrainEdit.config.Config;
@@ -8,7 +9,9 @@ import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.undo.UndoList;
+import net.minecraft.block.Block;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 import java.util.Arrays;
@@ -47,7 +50,7 @@ public class FunctionLayer extends Function {
             Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
             if(cuboid.getIsSet()){
                 try{
-                    int id = Integer.parseInt(args[1]);
+                    Block block = Block.func_149729_e(Integer.parseInt(args[1]));
                     int meta = 0;
                     boolean onlyOnExistingBlock = false;
                     if(args.length >= 3){
@@ -68,9 +71,9 @@ public class FunctionLayer extends Function {
                             int y = getHighestBlock(world, x, z, maxY, minY - 1) + 1;
                             if(y <= maxY && y >= minY){
                                 if(!onlyOnExistingBlock){
-                                    world.setBlock(x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
-                                }else if(world.getBlockId(x, y - 1, z) != 0){
-                                    world.setBlock(x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                    ApiBlock.setBlock(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                }else if(ApiBlock.getBlock(world, x, y - 1, z) != Blocks.field_150350_a){
+                                    ApiBlock.setBlock(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
                                 }
 
                             }
@@ -106,7 +109,7 @@ public class FunctionLayer extends Function {
             throw new IllegalArgumentException("maxY must be less than minY!");
         }else{
             for(int y = maxY; y >= minY; y--){
-                if(world.getBlockId(x, y, z) != 0){
+                if(ApiBlock.getBlock(world, x, y - 1, z) != Blocks.field_150350_a){
                     return y;
                 }
             }

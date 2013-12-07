@@ -1,11 +1,13 @@
 package net.acomputerdog.TerrainEdit.functions;
 
+import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.TerrainEdit.config.Config;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.undo.UndoList;
+import net.minecraft.block.Block;
 import net.minecraft.command.ICommandSender;
 
 /**
@@ -42,13 +44,13 @@ public class FunctionSetAt extends Function {
                 int x = Integer.parseInt(args[1]);
                 int y = Integer.parseInt(args[2]);
                 int z = Integer.parseInt(args[3]);
-                int id = Integer.parseInt(args[4]);
+                Block block = Block.func_149729_e(Integer.parseInt(args[4]));
                 int meta = 0;
                 if(args.length >= 6){
                     meta = Integer.parseInt(args[5]);
                 }
                 UndoList.createUndoTask(user.getEntityWorld(), x, y, z, x, y, z);
-                user.getEntityWorld().setBlock(x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                ApiBlock.setBlock(user.getEntityWorld(), x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
                 if(Config.getConfigForPlayer(user.getCommandSenderName()).commandConfirmation){
                     sendChatLine(user, EChatColor.COLOR_YELLOW + "Set block successfully!");
                 }

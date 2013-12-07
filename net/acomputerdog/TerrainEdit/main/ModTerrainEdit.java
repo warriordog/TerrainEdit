@@ -63,17 +63,17 @@ public class ModTerrainEdit extends Mod {
     */
     @Override
     public boolean isCompatibleWithBLVersion() {
-        if(!Version.getMinecraftVersion().equals("1.6.4")){
+        if(!Version.getMinecraftVersion().equals("1.7.2")){
             System.out.println("TerrainEdit - Incorrect Minecraft version, aborting launch!");
             return false;
-        }else if(Version.getGlobalVersion() == 1 && Version.getApiVersion() > 5){
+        }else if(Version.getGlobalVersion() == 2 && Version.getApiVersion() > 0){
             System.out.println("TerrainEdit - Unknown BL version, bad things may happen!");
             return true;
-        }else if(Version.getGlobalVersion() != 1 || Version.getApiVersion() <= -1){
+        }else if(Version.getGlobalVersion() != 2 || Version.getApiVersion() <= -1){
             System.out.println("TerrainEdit - Incompatible BL version, aborting launch!");
             return false;
         }else{
-            System.out.println("TerrainEdit - Valid BL and MC versions, launching.");
+            System.out.println("TerrainEdit - Valid BL and MC versions.");
             return true;
         }
     }

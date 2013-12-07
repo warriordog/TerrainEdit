@@ -1,5 +1,6 @@
 package net.acomputerdog.TerrainEdit.functions;
 
+import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.TerrainEdit.config.Config;
@@ -8,6 +9,7 @@ import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.undo.UndoList;
+import net.minecraft.block.Block;
 import net.minecraft.command.ICommandSender;
 
 import java.util.Random;
@@ -48,7 +50,7 @@ public class FunctionGenRan extends Function {
                 Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
                 if(cuboid.getIsSet()){
                     int chance = Integer.parseInt(args[1]);
-                    int id = Integer.parseInt(args[2]) ;
+                    Block block = Block.func_149729_e(Integer.parseInt(args[2]));
                     int meta = 0;
                     if(args.length >= 4){
                         meta = Integer.parseInt(args[3]);
@@ -58,7 +60,7 @@ public class FunctionGenRan extends Function {
                         for(int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++){
                             for(int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++){
                                 if(random.nextInt(100) < chance){
-                                    user.getEntityWorld().setBlock(x, y, z, id, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                    ApiBlock.setBlock(user.getEntityWorld(), x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
                                 }
                             }
                         }

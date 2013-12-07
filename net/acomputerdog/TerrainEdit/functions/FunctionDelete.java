@@ -1,5 +1,6 @@
 package net.acomputerdog.TerrainEdit.functions;
 
+import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
 import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
 import net.acomputerdog.TerrainEdit.config.Config;
@@ -8,7 +9,9 @@ import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
 import net.acomputerdog.TerrainEdit.main.CommandTE;
 import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
 import net.acomputerdog.TerrainEdit.undo.UndoList;
+import net.minecraft.block.Block;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.init.Blocks;
 
 /**
  * Function that deletes the blocks in the cuboid.
@@ -44,7 +47,7 @@ public class FunctionDelete extends Function {
                 for(int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++){
                     for(int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++){
                         for(int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++){
-                           user.getEntityWorld().setBlock(x, y, z, 0, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                            ApiBlock.setBlock(user.getEntityWorld(), x, y, z, Blocks.field_150350_a, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                         }
                     }
                 }
