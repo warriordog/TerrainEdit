@@ -20,6 +20,7 @@ import java.util.List;
 /**
  * A function that adds a layer of blocks to the cuboid.
  */
+//TODO fix
 public class FunctionLayer extends Function {
     public FunctionLayer(ModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
