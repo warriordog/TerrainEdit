@@ -63,9 +63,9 @@ public class FunctionReplace extends Function {
                     for(int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++){
                         for(int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++){
                             for(int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++){
-                                if(ApiBlock.getBlock(world, x, y, z) == block1){
+                                if(ApiBlock.getBlockAt(world, x, y, z) == block1){
                                     if(!useMeta1 || world.getBlockMetadata(x, y, z) == meta1){
-                                        ApiBlock.setBlock(world, x, y, z, block2, meta2, ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlockAt(world, x, y, z, block2, meta2, ENotificationType.NOTIFY_CLIENTS.getType());
                                     }
                                 }
                             }

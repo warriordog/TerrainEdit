@@ -72,9 +72,9 @@ public class FunctionLayer extends Function {
                             int y = getHighestBlock(world, x, z, maxY, minY - 1) + 1;
                             if(y <= maxY && y >= minY){
                                 if(!onlyOnExistingBlock){
-                                    ApiBlock.setBlock(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
-                                }else if(ApiBlock.getBlock(world, x, y - 1, z) != Blocks.field_150350_a){
-                                    ApiBlock.setBlock(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                    ApiBlock.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                }else if(ApiBlock.getBlockAt(world, x, y - 1, z) != Blocks.field_150350_a){
+                                    ApiBlock.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
                                 }
 
                             }
@@ -110,7 +110,7 @@ public class FunctionLayer extends Function {
             throw new IllegalArgumentException("maxY must be less than minY!");
         }else{
             for(int y = maxY; y >= minY; y--){
-                if(ApiBlock.getBlock(world, x, y - 1, z) != Blocks.field_150350_a){
+                if(ApiBlock.getBlockAt(world, x, y - 1, z) != Blocks.field_150350_a){
                     return y;
                 }
             }

@@ -50,7 +50,7 @@ public class FunctionSetAt extends Function {
                     meta = Integer.parseInt(args[5]);
                 }
                 UndoList.createUndoTask(user.getEntityWorld(), x, y, z, x, y, z);
-                ApiBlock.setBlock(user.getEntityWorld(), x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                ApiBlock.setBlockAt(user.getEntityWorld(), x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
                 if(Config.getConfigForPlayer(user.getCommandSenderName()).commandConfirmation){
                     sendChatLine(user, EChatColor.COLOR_YELLOW + "Set block successfully!");
                 }

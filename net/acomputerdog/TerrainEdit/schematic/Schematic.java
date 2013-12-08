@@ -7,7 +7,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagFloat;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -58,7 +57,7 @@ public class Schematic{
             for (int currY = y; currY < y + height; currY++){
                 for (int currZ = z; currZ < z + length; currZ++){
                     for (int currX = x; currX < x + width; currX++){
-                        ApiBlock.setBlock(world, currX, currY, currZ, Block.func_149729_e(blocks[currBlock]), data[currBlock], ENotificationType.NOTIFY_CLIENTS.getType());
+                        ApiBlock.setBlockAt(world, currX, currY, currZ, Block.func_149729_e(blocks[currBlock]), data[currBlock], ENotificationType.NOTIFY_CLIENTS.getType());
                         currBlock++;
                     }
                 }

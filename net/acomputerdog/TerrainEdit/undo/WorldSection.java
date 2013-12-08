@@ -30,7 +30,7 @@ public class WorldSection {
         for(int currX = Math.min(x1, x2); currX <= Math.max(x2, x1); currX++){
             for(int currY = Math.min(y1, y2); currY <= Math.max(y2, y1); currY++){
                 for(int currZ = Math.min(z1, z2); currZ <= Math.max(z2, z1); currZ++){
-                    blocks[currIndex] = ApiBlock.getBlock(world, currX, currY, currZ);
+                    blocks[currIndex] = ApiBlock.getBlockAt(world, currX, currY, currZ);
                     blockDATAs[currIndex] = world.getBlockMetadata(currX, currY, currZ);
                     TileEntity te = world.func_147438_o(currX, currY, currZ);
                     if(te != null){
@@ -53,7 +53,7 @@ public class WorldSection {
         for(int currX = Math.min(x1, x2); currX <= Math.max(x2, x1); currX++){
             for(int currY = Math.min(y1, y2); currY <= Math.max(y2, y1); currY++){
                 for(int currZ = Math.min(z1, z2); currZ <= Math.max(z2, z1); currZ++){
-                    ApiBlock.setBlock(world, currX, currY, currZ, blocks[currIndex], blockDATAs[currIndex], ENotificationType.NOTIFY_CLIENTS.getType());
+                    ApiBlock.setBlockAt(world, currX, currY, currZ, blocks[currIndex], blockDATAs[currIndex], ENotificationType.NOTIFY_CLIENTS.getType());
                     TileEntity te = world.func_147438_o(currX, currY, currZ);
                     if(te != null){
                         world.func_147455_a(currX, currY, currZ, TileEntity.func_145827_c(tileEntities.getCompoundTag(currX + "," + currY + "," + currZ)));

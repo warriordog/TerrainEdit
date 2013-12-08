@@ -67,11 +67,11 @@ public class FunctionShift extends Function {
                             for(int y = y2; dir ? y >= y1 : y <= y1; y = dir ? y-1 : y+1){
                                 if(allowShiftOutOfCuboid || (y + distance >= y2 && y + distance <= y1)){
                                     if(dir){
-                                        ApiBlock.setBlock(world, x, y + distance, z, ApiBlock.getBlock(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                        ApiBlock.setBlock(world, x, y, z, Blocks.field_150350_a, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlockAt(world, x, y + distance, z, ApiBlock.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlockAt(world, x, y, z, Blocks.field_150350_a, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                                     }else{
-                                        ApiBlock.setBlock(world, x, y - distance, z, ApiBlock.getBlock(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                        ApiBlock.setBlock(world, x, y, z, Blocks.field_150350_a, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlockAt(world, x, y - distance, z, ApiBlock.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlockAt(world, x, y, z, Blocks.field_150350_a, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                                     }
                                 }
                             }
