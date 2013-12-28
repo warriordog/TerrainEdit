@@ -46,12 +46,12 @@ public class FunctionLayer extends Function {
     @Override
     public void execute(ICommandSender user, String[] args) {
         if(args.length < 2){
-            sendChatLine(user, EChatColor.COLOR_RED + "Not enough arguments!  Use /te layer <block_id> [metadata] [switches]");
+            sendChatLine(user, EChatColor.COLOR_RED + "Not enough arguments!  Use /te layer <block> [metadata] [switches]");
         }else{
             Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
             if(cuboid.getIsSet()){
                 try{
-                    Block block = Block.func_149729_e(Integer.parseInt(args[1]));
+                    Block block = ApiBlock.getBlockByNameOrId(args[1]);
                     int meta = 0;
                     boolean onlyOnExistingBlock = false;
                     if(args.length >= 3){
@@ -84,7 +84,7 @@ public class FunctionLayer extends Function {
                         sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
                     }
                 }catch(NumberFormatException e){
-                    sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use Use /te layer <block_id> [metadata] [switches]");
+                    sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use Use /te layer <block> [metadata] [switches]");
                 }catch(Exception e){
                     sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while layering blocks!");
                     e.printStackTrace();

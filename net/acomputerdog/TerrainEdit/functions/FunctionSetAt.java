@@ -38,13 +38,13 @@ public class FunctionSetAt extends Function {
     @Override
     public void execute(ICommandSender user, String[] args) {
         if(args.length < 5){
-            sendChatLine(user, EChatColor.COLOR_RED + "Not enough args!  Use /te setat <x> <y> <z> <block_id> [metadata]");
+            sendChatLine(user, EChatColor.COLOR_RED + "Not enough args!  Use /te setat <x> <y> <z> <block> [metadata]");
         }else{
             try{
                 int x = Integer.parseInt(args[1]);
                 int y = Integer.parseInt(args[2]);
                 int z = Integer.parseInt(args[3]);
-                Block block = Block.func_149729_e(Integer.parseInt(args[4]));
+                Block block = ApiBlock.getBlockByNameOrId(args[4]);
                 int meta = 0;
                 if(args.length >= 6){
                     meta = Integer.parseInt(args[5]);
@@ -55,7 +55,7 @@ public class FunctionSetAt extends Function {
                     sendChatLine(user, EChatColor.COLOR_YELLOW + "Set block successfully!");
                 }
             }catch(NumberFormatException e){
-                sendChatLine(user, EChatColor.COLOR_RED + "Invalid args!  Use /te setat <x> <y> <z> <block_id> [metadata]");
+                sendChatLine(user, EChatColor.COLOR_RED + "Invalid args!  Use /te setat <x> <y> <z> <block> [metadata]");
             }catch(Exception e){
                 sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while setting the block!");
                 e.printStackTrace();

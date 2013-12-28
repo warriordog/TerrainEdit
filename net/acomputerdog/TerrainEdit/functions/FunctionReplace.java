@@ -41,13 +41,13 @@ public class FunctionReplace extends Function {
     @Override
     public void execute(ICommandSender user, String[] args) {
         if(args.length < 3){
-            sendChatLine(user, EChatColor.COLOR_RED + "Not enough args!  Use /te replace <block1_id> <block2_id> [block1_meta] [block2_meta]");
+            sendChatLine(user, EChatColor.COLOR_RED + "Not enough args!  Use /te replace <block1> <block2> [block1_meta] [block2_meta]");
         }else{
             try{
                 Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
                 if(cuboid.getIsSet()){
-                    Block block1 = Block.func_149729_e(Integer.parseInt(args[1]));
-                    Block block2 = Block.func_149729_e(Integer.parseInt(args[2]));
+                    Block block1 = ApiBlock.getBlockByNameOrId(args[1]);
+                    Block block2 = ApiBlock.getBlockByNameOrId(args[2]);
                     boolean useMeta1 = false;
                     int meta1 = 0;
                     if(args.length >= 4){
@@ -78,7 +78,7 @@ public class FunctionReplace extends Function {
                     sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
                 }
             }catch(NumberFormatException e){
-                sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use /te replace <block1_id> <block2_id> [block1_meta] [block2_meta]");
+                sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use /te replace <block1> <block2> [block1_meta] [block2_meta]");
             }catch(Exception e){
                 sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while replacing blocks!");
                 e.printStackTrace();

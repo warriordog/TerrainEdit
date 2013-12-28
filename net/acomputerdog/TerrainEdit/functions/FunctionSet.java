@@ -40,12 +40,12 @@ public class FunctionSet extends Function {
     @Override
     public void execute(ICommandSender user, String[] args) {
         if(args.length < 2){
-            sendChatLine(user, EChatColor.COLOR_RED + "Not enough arguments!  Use /te set <block_id> [metadata]");
+            sendChatLine(user, EChatColor.COLOR_RED + "Not enough arguments!  Use /te set <block> [metadata]");
         }else{
             Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
             if(cuboid.getIsSet()){
                 try{
-                    Block block = Block.func_149729_e(Integer.parseInt(args[1]));
+                    Block block = ApiBlock.getBlockByNameOrId(args[1]);
                     int meta = 0;
                     if(args.length >= 3){
                         meta = Integer.parseInt(args[2]);
@@ -62,7 +62,7 @@ public class FunctionSet extends Function {
                         sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
                     }
                 }catch(NumberFormatException e){
-                    sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use /te set <block_id> [metadata]");
+                    sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use /te set <block> [metadata]");
                 }catch(Exception e){
                     sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while setting blocks!");
                     e.printStackTrace();
