@@ -23,7 +23,6 @@ public class CommandTE extends BLCommandBase {
         new FunctionP2(baseMod, this);
         new FunctionSet(baseMod, this);
         new FunctionDelete(baseMod, this);
-        new FunctionSetAt(baseMod, this);
         new FunctionGenRan(baseMod, this);
         new FunctionReplace(baseMod, this);
         new FunctionSchemLoad(baseMod, this);
