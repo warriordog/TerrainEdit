@@ -2,7 +2,6 @@ package net.acomputerdog.TerrainEdit.schematic;
 
 import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
 import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -41,8 +40,8 @@ public class Schematic{
             blocks = this.schematic.getByteArray("Blocks");
             data = this.schematic.getByteArray("Data");
             materials = this.schematic.getString("Materials");
-            entities = this.schematic.func_150295_c("Entities", 0);
-            tileEntities = this.schematic.func_150295_c("TileEntities", 0);
+            entities = this.schematic.getTagList("Entities", 0);
+            tileEntities = this.schematic.getTagList("TileEntities", 0);
         }
         catch (Exception e)
         {
@@ -57,7 +56,7 @@ public class Schematic{
             for (int currY = y; currY < y + height; currY++){
                 for (int currZ = z; currZ < z + length; currZ++){
                     for (int currX = x; currX < x + width; currX++){
-                        ApiBlock.setBlockAt(world, currX, currY, currZ, Block.func_149729_e(blocks[currBlock]), data[currBlock], ENotificationType.NOTIFY_CLIENTS.getType());
+                        ApiBlock.setBlockAt(world, currX, currY, currZ, ApiBlock.getBlockById(blocks[currBlock]), data[currBlock], ENotificationType.NOTIFY_CLIENTS.getType());
                         currBlock++;
                     }
                 }
@@ -66,7 +65,7 @@ public class Schematic{
             Collection<TileEntity> tileEntityCollection = new ArrayList<TileEntity>();
 
             for (int count = 0; count < tileEntities.tagCount(); count++){
-                TileEntity currTileEntity = TileEntity.func_145827_c(tileEntities.func_150305_b(count));
+                TileEntity currTileEntity = TileEntity.createAndLoadEntity(tileEntities.getCompoundTagAt(count));
                 if (currTileEntity != null){
                     currTileEntity.field_145851_c = currTileEntity.field_145851_c + length;
                     currTileEntity.field_145848_d = currTileEntity.field_145848_d + height;
@@ -77,8 +76,8 @@ public class Schematic{
             world.func_147448_a(tileEntityCollection);
 
             for (int count = 0; count < entities.tagCount(); count++){
-                NBTTagCompound currTag = entities.func_150305_b(count);
-                NBTTagList currRot = currTag.func_150295_c("Rotation", 0);
+                NBTTagCompound currTag = entities.getCompoundTagAt(count);
+                NBTTagList currRot = currTag.getTagList("Rotation", 0);
                 Entity currEntity = EntityList.createEntityByName((currTag.getString("id")), world);
                 if (currEntity != null){
                     currEntity.setLocationAndAngles(x, y, z, currRot.func_150308_e(0), currRot.func_150308_e(1));

@@ -68,10 +68,10 @@ public class FunctionShift extends Function {
                                 if(allowShiftOutOfCuboid || (y + distance >= y2 && y + distance <= y1)){
                                     if(dir){
                                         ApiBlock.setBlockAt(world, x, y + distance, z, ApiBlock.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                        ApiBlock.setBlockAt(world, x, y, z, Blocks.field_150350_a, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                                     }else{
                                         ApiBlock.setBlockAt(world, x, y - distance, z, ApiBlock.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                        ApiBlock.setBlockAt(world, x, y, z, Blocks.field_150350_a, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlock.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                                     }
                                 }
                             }
