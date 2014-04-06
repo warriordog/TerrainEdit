@@ -3,14 +3,14 @@ package net.acomputerdog.TerrainEdit.main;
 import net.acomputerdog.BlazeLoader.api.command.ApiCommand;
 import net.acomputerdog.BlazeLoader.main.Version;
 import net.acomputerdog.BlazeLoader.mod.Mod;
-import net.acomputerdog.BlazeLoader.util.logger.BLLogger;
+import net.acomputerdog.core.logger.CLogger;
 
 /**
  * Base mod class for TerrainEdit.  Registers CommandTE.
  */
 public class ModTerrainEdit extends Mod {
     public CommandTE command;
-    public BLLogger logger = new BLLogger(this, true, true);
+    public CLogger logger = new CLogger(this.getModName(), true, true);
     public static ModTerrainEdit instance;
 
     /**
