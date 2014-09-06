@@ -1,6 +1,6 @@
-package net.acomputerdog.TerrainEdit.undo;
+package com.blazeloader.TerrainEdit.undo;
 
-import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
+import com.blazeloader.TerrainEdit.cuboid.Cuboid;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -13,36 +13,36 @@ public class UndoList {
     private static List<WorldSection> tasks = new ArrayList<WorldSection>();
     private static int maxEntries = 5;
 
-    public static void addTask(WorldSection task){
+    public static void addTask(WorldSection task) {
         tasks.add(task);
-        if(tasks.size() > maxEntries){
+        if (tasks.size() > maxEntries) {
             tasks.remove(0);
         }
     }
 
-    public static boolean hasTask(){
+    public static boolean hasTask() {
         return tasks.size() > 0;
     }
 
-    public static void undoLastTask(World world){
-        if(hasTask()){
+    public static void undoLastTask(World world) {
+        if (hasTask()) {
             tasks.remove(tasks.size() - 1).writeInto(world);
         }
     }
 
-    public static int getMaxEntries(){
+    public static int getMaxEntries() {
         return maxEntries;
     }
 
-    public static void setMaxEntries(int maxEntries){
+    public static void setMaxEntries(int maxEntries) {
         UndoList.maxEntries = maxEntries;
     }
 
-    public static void createUndoTask(World world, Cuboid cuboid){
+    public static void createUndoTask(World world, Cuboid cuboid) {
         addTask(new WorldSection(cuboid, world));
     }
 
-    public static void createUndoTask(World world, int x1 ,int y1, int z1, int x2, int y2, int z2){
+    public static void createUndoTask(World world, int x1, int y1, int z1, int x2, int y2, int z2) {
         addTask(new WorldSection(x1, y1, z1, x2, y2, z2, world));
     }
 }

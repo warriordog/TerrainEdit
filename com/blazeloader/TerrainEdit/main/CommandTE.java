@@ -1,8 +1,8 @@
-package net.acomputerdog.TerrainEdit.main;
+package com.blazeloader.TerrainEdit.main;
 
-import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
-import net.acomputerdog.BlazeLoader.api.command.BLCommandBase;
-import net.acomputerdog.TerrainEdit.functions.*;
+import com.blazeloader.TerrainEdit.functions.*;
+import com.blazeloader.api.api.chat.EChatColor;
+import com.blazeloader.api.api.command.BLCommandBase;
 import net.minecraft.command.ICommandSender;
 
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class CommandTE extends BLCommandBase {
     protected ModTerrainEdit baseMod;
     public Map<String, Function> functionList = new HashMap<String, Function>();
 
-    public CommandTE(ModTerrainEdit baseMod){
+    public CommandTE(ModTerrainEdit baseMod) {
         super();
         this.baseMod = baseMod;
         new FunctionHelp(baseMod, this);
@@ -51,13 +51,13 @@ public class CommandTE extends BLCommandBase {
 
     @Override
     public void processCommand(ICommandSender user, String[] args) {
-        if(args.length == 0){
+        if (args.length == 0) {
             sendChatLine(user, EChatColor.COLOR_RED + "Please specify a function using /te [function [args]].  Use /te help for more info.");
-        }else{
+        } else {
             Function function = functionList.get(args[0]);
-            if(function != null){
+            if (function != null) {
                 function.execute(user, args);
-            }else{
+            } else {
                 sendChat(user, EChatColor.COLOR_RED + "Unknown function!  Use \"/te help\" for a list.");
             }
         }

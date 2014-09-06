@@ -1,14 +1,13 @@
-package net.acomputerdog.TerrainEdit.functions;
+package com.blazeloader.TerrainEdit.functions;
 
-import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
-import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
-import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
-import net.acomputerdog.TerrainEdit.config.Config;
-import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
-import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
-import net.acomputerdog.TerrainEdit.main.CommandTE;
-import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
-import net.acomputerdog.TerrainEdit.undo.UndoList;
+import com.blazeloader.TerrainEdit.cuboid.Cuboid;
+import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.CommandTE;
+import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
+import com.blazeloader.TerrainEdit.undo.UndoList;
+import com.blazeloader.api.api.block.ApiBlock;
+import com.blazeloader.api.api.block.ENotificationType;
+import com.blazeloader.api.api.chat.EChatColor;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -43,17 +42,17 @@ public class FunctionShift extends Function {
      */
     @Override
     public void execute(ICommandSender user, String[] args) {
-        if(args.length < 2){
+        if (args.length < 2) {
             sendChatLine(user, EChatColor.COLOR_RED + "Not enough arguments!  Use /te shift <distance> [switches]");
-        }else{
+        } else {
             Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
-            if(cuboid.getIsSet()){
-                try{
+            if (cuboid.getIsSet()) {
+                try {
                     int distance = Integer.parseInt(args[1]);
                     boolean allowShiftOutOfCuboid = false;
-                    if(args.length >= 3){
+                    if (args.length >= 3) {
                         List<String> switches = Arrays.asList(args[2].split("-"));
-                        if(switches.contains("allowOutOfCuboid")){
+                        if (switches.contains("allowOutOfCuboid")) {
                             allowShiftOutOfCuboid = true;
                         }
                     }
@@ -62,14 +61,14 @@ public class FunctionShift extends Function {
                     boolean dir = distance >= 0;
                     int y1 = dir ? cuboid.getMaxY() : cuboid.getMinY();
                     int y2 = dir ? cuboid.getMinY() : cuboid.getMaxY();
-                    for(int x = cuboid.getMinX(); x <= cuboid.getMaxX(); x++){
-                        for(int z = cuboid.getMinZ(); z <= cuboid.getMaxZ(); z++){
-                            for(int y = y2; dir ? y >= y1 : y <= y1; y = dir ? y-1 : y+1){
-                                if(allowShiftOutOfCuboid || (y + distance >= y2 && y + distance <= y1)){
-                                    if(dir){
+                    for (int x = cuboid.getMinX(); x <= cuboid.getMaxX(); x++) {
+                        for (int z = cuboid.getMinZ(); z <= cuboid.getMaxZ(); z++) {
+                            for (int y = y2; dir ? y >= y1 : y <= y1; y = dir ? y - 1 : y + 1) {
+                                if (allowShiftOutOfCuboid || (y + distance >= y2 && y + distance <= y1)) {
+                                    if (dir) {
                                         ApiBlock.setBlockAt(world, x, y + distance, z, ApiBlock.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
                                         ApiBlock.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
-                                    }else{
+                                    } else {
                                         ApiBlock.setBlockAt(world, x, y - distance, z, ApiBlock.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
                                         ApiBlock.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                                     }
@@ -77,16 +76,14 @@ public class FunctionShift extends Function {
                             }
                         }
                     }
-                    if(Config.getConfigForPlayer(user.getCommandSenderName()).commandConfirmation){
-                        sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
-                    }
-                }catch(NumberFormatException e){
+                    sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+                } catch (NumberFormatException e) {
                     sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use /te shift <distance> [switches]");
-                }catch(Exception e){
+                } catch (Exception e) {
                     sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while shifting blocks!");
                     e.printStackTrace();
                 }
-            }else{
+            } else {
                 sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
             }
         }

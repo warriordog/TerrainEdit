@@ -1,14 +1,13 @@
-package net.acomputerdog.TerrainEdit.functions;
+package com.blazeloader.TerrainEdit.functions;
 
-import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
-import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
-import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
-import net.acomputerdog.TerrainEdit.config.Config;
-import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
-import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
-import net.acomputerdog.TerrainEdit.main.CommandTE;
-import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
-import net.acomputerdog.TerrainEdit.undo.UndoList;
+import com.blazeloader.TerrainEdit.cuboid.Cuboid;
+import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.CommandTE;
+import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
+import com.blazeloader.TerrainEdit.undo.UndoList;
+import com.blazeloader.api.api.block.ApiBlock;
+import com.blazeloader.api.api.block.ENotificationType;
+import com.blazeloader.api.api.chat.EChatColor;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.init.Blocks;
@@ -45,20 +44,20 @@ public class FunctionLayer extends Function {
      */
     @Override
     public void execute(ICommandSender user, String[] args) {
-        if(args.length < 2){
+        if (args.length < 2) {
             sendChatLine(user, EChatColor.COLOR_RED + "Not enough arguments!  Use /te layer <block> [metadata] [switches]");
-        }else{
+        } else {
             Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
-            if(cuboid.getIsSet()){
-                try{
+            if (cuboid.getIsSet()) {
+                try {
                     Block block = ApiBlock.getBlockByNameOrId(args[1]);
                     int meta = 0;
                     boolean onlyOnExistingBlock = false;
-                    if(args.length >= 3){
+                    if (args.length >= 3) {
                         meta = Integer.parseInt(args[2]);
-                        if(args.length >= 4){
+                        if (args.length >= 4) {
                             List<String> switches = Arrays.asList(args[3].split("-"));
-                            if(switches.contains("b")){
+                            if (switches.contains("b")) {
                                 onlyOnExistingBlock = true;
                             }
                         }
@@ -67,29 +66,27 @@ public class FunctionLayer extends Function {
                     World world = user.getEntityWorld();
                     int maxY = Math.max(cuboid.getYPos1(), cuboid.getYPos2());
                     int minY = Math.min(cuboid.getYPos1(), cuboid.getYPos2());
-                    for(int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++){
-                        for(int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++){
+                    for (int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++) {
+                        for (int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++) {
                             int y = getHighestBlock(world, x, z, maxY, minY - 1) + 1;
-                            if(y <= maxY && y >= minY){
-                                if(!onlyOnExistingBlock){
+                            if (y <= maxY && y >= minY) {
+                                if (!onlyOnExistingBlock) {
                                     ApiBlock.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
-                                }else if(ApiBlock.getBlockAt(world, x, y - 1, z) != Blocks.air){
+                                } else if (ApiBlock.getBlockAt(world, x, y - 1, z) != Blocks.air) {
                                     ApiBlock.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
                                 }
 
                             }
                         }
                     }
-                    if(Config.getConfigForPlayer(user.getCommandSenderName()).commandConfirmation){
-                        sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
-                    }
-                }catch(NumberFormatException e){
+                    sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+                } catch (NumberFormatException e) {
                     sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use Use /te layer <block> [metadata] [switches]");
-                }catch(Exception e){
+                } catch (Exception e) {
                     sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while layering blocks!");
                     e.printStackTrace();
                 }
-            }else{
+            } else {
                 sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
             }
         }
@@ -105,12 +102,12 @@ public class FunctionLayer extends Function {
         return "Adds a layer of blocks to the cuboid.";
     }
 
-    public int getHighestBlock(World world, int x, int z, int maxY, int minY){
-        if(maxY < minY){
+    public int getHighestBlock(World world, int x, int z, int maxY, int minY) {
+        if (maxY < minY) {
             throw new IllegalArgumentException("maxY must be less than minY!");
-        }else{
-            for(int y = maxY; y >= minY; y--){
-                if(ApiBlock.getBlockAt(world, x, y - 1, z) != Blocks.air){
+        } else {
+            for (int y = maxY; y >= minY; y--) {
+                if (ApiBlock.getBlockAt(world, x, y - 1, z) != Blocks.air) {
                     return y;
                 }
             }

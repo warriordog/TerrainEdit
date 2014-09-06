@@ -1,10 +1,9 @@
-package net.acomputerdog.TerrainEdit.functions;
+package com.blazeloader.TerrainEdit.functions;
 
-import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
-import net.acomputerdog.TerrainEdit.config.Config;
-import net.acomputerdog.TerrainEdit.main.CommandTE;
-import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
-import net.acomputerdog.TerrainEdit.undo.UndoList;
+import com.blazeloader.TerrainEdit.main.CommandTE;
+import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
+import com.blazeloader.TerrainEdit.undo.UndoList;
+import com.blazeloader.api.api.chat.EChatColor;
 import net.minecraft.command.ICommandSender;
 
 /**
@@ -34,16 +33,14 @@ public class FunctionUndo extends Function {
      */
     @Override
     public void execute(ICommandSender user, String[] args) {
-        try{
-            if(UndoList.hasTask()){
+        try {
+            if (UndoList.hasTask()) {
                 UndoList.undoLastTask(user.getEntityWorld());
-                if(Config.getConfigForPlayer(user.getCommandSenderName()).commandConfirmation){
-                    sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
-                }
-            }else{
+                sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+            } else {
                 sendChatLine(user, EChatColor.COLOR_RED + "There is nothing to undo!");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while undoing the previous action!!");
         }
     }

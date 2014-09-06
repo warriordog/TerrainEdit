@@ -1,7 +1,7 @@
-package net.acomputerdog.TerrainEdit.schematic;
+package com.blazeloader.TerrainEdit.schematic;
 
-import net.acomputerdog.BlazeLoader.api.block.ApiBlock;
-import net.acomputerdog.BlazeLoader.api.block.ENotificationType;
+import com.blazeloader.api.api.block.ApiBlock;
+import com.blazeloader.api.api.block.ENotificationType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -19,20 +19,20 @@ import java.util.Collection;
 /**
  * Represents a schematic.  Very old and buggy code.  Must be tied to a File that contains the schematic.
  */
-public class Schematic{
-	NBTTagCompound schematic;
-	short height;
-	short length;
-	short width;
-	byte[] blocks;
-	byte[] data;
-	String materials;
+public class Schematic {
+    NBTTagCompound schematic;
+    short height;
+    short length;
+    short width;
+    byte[] blocks;
+    byte[] data;
+    String materials;
 
-	NBTTagList entities;
-	NBTTagList tileEntities;
+    NBTTagList entities;
+    NBTTagList tileEntities;
 
-    public Schematic(File path){
-        try{
+    public Schematic(File path) {
+        try {
             this.schematic = CompressedStreamTools.readCompressed(new FileInputStream(path));
             height = this.schematic.getShort("Height");
             length = this.schematic.getShort("Length");
@@ -42,20 +42,18 @@ public class Schematic{
             materials = this.schematic.getString("Materials");
             entities = this.schematic.getTagList("Entities", 0);
             tileEntities = this.schematic.getTagList("TileEntities", 0);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException("Error loading schematic!", e);
         }
     }
 
-    public void place(World world, int x, int y, int z){
-        try{
+    public void place(World world, int x, int y, int z) {
+        try {
             int currBlock = 0;
             //For loops MUST stay in order!!
-            for (int currY = y; currY < y + height; currY++){
-                for (int currZ = z; currZ < z + length; currZ++){
-                    for (int currX = x; currX < x + width; currX++){
+            for (int currY = y; currY < y + height; currY++) {
+                for (int currZ = z; currZ < z + length; currZ++) {
+                    for (int currX = x; currX < x + width; currX++) {
                         ApiBlock.setBlockAt(world, currX, currY, currZ, ApiBlock.getBlockById(blocks[currBlock]), data[currBlock], ENotificationType.NOTIFY_CLIENTS.getType());
                         currBlock++;
                     }
@@ -64,23 +62,23 @@ public class Schematic{
 
             Collection<TileEntity> tileEntityCollection = new ArrayList<TileEntity>();
 
-            for (int count = 0; count < tileEntities.tagCount(); count++){
+            for (int count = 0; count < tileEntities.tagCount(); count++) {
                 TileEntity currTileEntity = TileEntity.createAndLoadEntity(tileEntities.getCompoundTagAt(count));
-                if (currTileEntity != null){
-                    currTileEntity.field_145851_c = currTileEntity.field_145851_c + length;
-                    currTileEntity.field_145848_d = currTileEntity.field_145848_d + height;
-                    currTileEntity.field_145849_e = currTileEntity.field_145849_e + width;
+                if (currTileEntity != null) {
+                    currTileEntity.xCoord = currTileEntity.xCoord + length;
+                    currTileEntity.yCoord = currTileEntity.yCoord + height;
+                    currTileEntity.zCoord = currTileEntity.zCoord + width;
                     tileEntityCollection.add(currTileEntity);
                 }
             }
             world.func_147448_a(tileEntityCollection);
 
-            for (int count = 0; count < entities.tagCount(); count++){
+            for (int count = 0; count < entities.tagCount(); count++) {
                 NBTTagCompound currTag = entities.getCompoundTagAt(count);
                 NBTTagList currRot = currTag.getTagList("Rotation", 0);
                 Entity currEntity = EntityList.createEntityByName((currTag.getString("id")), world);
-                if (currEntity != null){
-                    currEntity.setLocationAndAngles(x, y, z, currRot.func_150308_e(0), currRot.func_150308_e(1));
+                if (currEntity != null) {
+                    currEntity.setLocationAndAngles(x, y, z, currRot.getFloatAt(0), currRot.getFloatAt(1));
                     currEntity.setAir(currTag.getShort("Air"));
                     currEntity.setFire(currTag.getShort("Fire"));
                     currEntity.fallDistance = (currTag.getFloat("FallDistance"));
@@ -88,8 +86,7 @@ public class Schematic{
                     world.spawnEntityInWorld(currEntity);
                 }
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Exception placing schematic!", e);
         }
     }

@@ -1,11 +1,10 @@
-package net.acomputerdog.TerrainEdit.functions;
+package com.blazeloader.TerrainEdit.functions;
 
-import net.acomputerdog.BlazeLoader.api.chat.EChatColor;
-import net.acomputerdog.TerrainEdit.config.Config;
-import net.acomputerdog.TerrainEdit.cuboid.Cuboid;
-import net.acomputerdog.TerrainEdit.cuboid.CuboidTable;
-import net.acomputerdog.TerrainEdit.main.CommandTE;
-import net.acomputerdog.TerrainEdit.main.ModTerrainEdit;
+import com.blazeloader.TerrainEdit.cuboid.Cuboid;
+import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.CommandTE;
+import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
+import com.blazeloader.api.api.chat.EChatColor;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChunkCoordinates;
 
@@ -42,15 +41,13 @@ public class FunctionP2 extends Function {
         cuboid.setXPos2(loc.posX);
         cuboid.setYPos2(loc.posY);
         cuboid.setZPos2(loc.posZ);
-        if(!cuboid.getIsSet()){
+        if (!cuboid.getIsSet()) {
             cuboid.setXPos1(loc.posX);
             cuboid.setYPos1(loc.posY);
             cuboid.setZPos1(loc.posZ);
             cuboid.setIsSet(true);
         }
-        if(Config.getConfigForPlayer(user.getCommandSenderName()).commandConfirmation){
-            sendChatLine(user, EChatColor.COLOR_YELLOW + "Set cuboid position 2 to: " + loc.posX + ", " + loc.posY + ", " + loc.posZ + ".");
-        }
+        sendChatLine(user, EChatColor.COLOR_YELLOW + "Set cuboid position 2 to: " + loc.posX + ", " + loc.posY + ", " + loc.posZ + ".");
     }
 
     /**
