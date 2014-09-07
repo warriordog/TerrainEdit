@@ -1,7 +1,7 @@
 package com.blazeloader.TerrainEdit.main;
 
 import com.blazeloader.TerrainEdit.functions.*;
-import com.blazeloader.api.direct.server.api.chat.EChatColor;
+import com.blazeloader.api.direct.base.api.chat.EChatColor;
 import com.blazeloader.api.direct.server.api.command.BLCommandBase;
 import net.minecraft.command.ICommandSender;
 
