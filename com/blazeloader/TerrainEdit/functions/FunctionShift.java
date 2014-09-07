@@ -5,9 +5,9 @@ import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
 import com.blazeloader.TerrainEdit.main.CommandTE;
 import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
-import com.blazeloader.api.api.block.ApiBlock;
-import com.blazeloader.api.api.block.ENotificationType;
-import com.blazeloader.api.api.chat.EChatColor;
+import com.blazeloader.api.direct.base.api.chat.EChatColor;
+import com.blazeloader.api.direct.server.api.block.ApiBlockServer;
+import com.blazeloader.api.direct.server.api.block.ENotificationType;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -66,11 +66,11 @@ public class FunctionShift extends Function {
                             for (int y = y2; dir ? y >= y1 : y <= y1; y = dir ? y - 1 : y + 1) {
                                 if (allowShiftOutOfCuboid || (y + distance >= y2 && y + distance <= y1)) {
                                     if (dir) {
-                                        ApiBlock.setBlockAt(world, x, y + distance, z, ApiBlock.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                        ApiBlock.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlockServer.setBlockAt(world, x, y + distance, z, ApiBlockServer.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlockServer.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                                     } else {
-                                        ApiBlock.setBlockAt(world, x, y - distance, z, ApiBlock.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                        ApiBlock.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlockServer.setBlockAt(world, x, y - distance, z, ApiBlockServer.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
+                                        ApiBlockServer.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                                     }
                                 }
                             }

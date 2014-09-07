@@ -1,7 +1,7 @@
 package com.blazeloader.TerrainEdit.schematic;
 
-import com.blazeloader.api.api.block.ApiBlock;
-import com.blazeloader.api.api.block.ENotificationType;
+import com.blazeloader.api.direct.server.api.block.ApiBlockServer;
+import com.blazeloader.api.direct.server.api.block.ENotificationType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -54,7 +54,7 @@ public class Schematic {
             for (int currY = y; currY < y + height; currY++) {
                 for (int currZ = z; currZ < z + length; currZ++) {
                     for (int currX = x; currX < x + width; currX++) {
-                        ApiBlock.setBlockAt(world, currX, currY, currZ, ApiBlock.getBlockById(blocks[currBlock]), data[currBlock], ENotificationType.NOTIFY_CLIENTS.getType());
+                        ApiBlockServer.setBlockAt(world, currX, currY, currZ, ApiBlockServer.getBlockById(blocks[currBlock]), data[currBlock], ENotificationType.NOTIFY_CLIENTS.getType());
                         currBlock++;
                     }
                 }

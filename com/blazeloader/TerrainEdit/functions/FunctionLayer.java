@@ -5,9 +5,9 @@ import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
 import com.blazeloader.TerrainEdit.main.CommandTE;
 import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
-import com.blazeloader.api.api.block.ApiBlock;
-import com.blazeloader.api.api.block.ENotificationType;
-import com.blazeloader.api.api.chat.EChatColor;
+import com.blazeloader.api.direct.base.api.chat.EChatColor;
+import com.blazeloader.api.direct.server.api.block.ApiBlockServer;
+import com.blazeloader.api.direct.server.api.block.ENotificationType;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.init.Blocks;
@@ -50,7 +50,7 @@ public class FunctionLayer extends Function {
             Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
             if (cuboid.getIsSet()) {
                 try {
-                    Block block = ApiBlock.getBlockByNameOrId(args[1]);
+                    Block block = ApiBlockServer.getBlockByNameOrId(args[1]);
                     int meta = 0;
                     boolean onlyOnExistingBlock = false;
                     if (args.length >= 3) {
@@ -71,9 +71,9 @@ public class FunctionLayer extends Function {
                             int y = getHighestBlock(world, x, z, maxY, minY - 1) + 1;
                             if (y <= maxY && y >= minY) {
                                 if (!onlyOnExistingBlock) {
-                                    ApiBlock.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
-                                } else if (ApiBlock.getBlockAt(world, x, y - 1, z) != Blocks.air) {
-                                    ApiBlock.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                    ApiBlockServer.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                } else if (ApiBlockServer.getBlockAt(world, x, y - 1, z) != Blocks.air) {
+                                    ApiBlockServer.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
                                 }
 
                             }
@@ -107,7 +107,7 @@ public class FunctionLayer extends Function {
             throw new IllegalArgumentException("maxY must be less than minY!");
         } else {
             for (int y = maxY; y >= minY; y--) {
-                if (ApiBlock.getBlockAt(world, x, y - 1, z) != Blocks.air) {
+                if (ApiBlockServer.getBlockAt(world, x, y - 1, z) != Blocks.air) {
                     return y;
                 }
             }

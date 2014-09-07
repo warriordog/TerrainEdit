@@ -1,6 +1,6 @@
 package com.blazeloader.TerrainEdit.main;
 
-import com.blazeloader.api.mod.BLMod;
+import com.blazeloader.api.core.base.mod.BLMod;
 import net.acomputerdog.core.logger.CLogger;
 
 import java.io.File;

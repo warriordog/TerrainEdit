@@ -5,9 +5,9 @@ import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
 import com.blazeloader.TerrainEdit.main.CommandTE;
 import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
-import com.blazeloader.api.api.block.ApiBlock;
-import com.blazeloader.api.api.block.ENotificationType;
-import com.blazeloader.api.api.chat.EChatColor;
+import com.blazeloader.api.direct.base.api.chat.EChatColor;
+import com.blazeloader.api.direct.server.api.block.ApiBlockServer;
+import com.blazeloader.api.direct.server.api.block.ENotificationType;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.init.Blocks;
 
@@ -45,7 +45,7 @@ public class FunctionDelete extends Function {
                 for (int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++) {
                     for (int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++) {
                         for (int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++) {
-                            ApiBlock.setBlockAt(user.getEntityWorld(), x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                            ApiBlockServer.setBlockAt(user.getEntityWorld(), x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                         }
                     }
                 }

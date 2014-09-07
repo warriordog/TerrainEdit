@@ -1,8 +1,8 @@
 package com.blazeloader.TerrainEdit.undo;
 
 import com.blazeloader.TerrainEdit.cuboid.Cuboid;
-import com.blazeloader.api.api.block.ApiBlock;
-import com.blazeloader.api.api.block.ENotificationType;
+import com.blazeloader.api.direct.server.api.block.ApiBlockServer;
+import com.blazeloader.api.direct.server.api.block.ENotificationType;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -30,7 +30,7 @@ public class WorldSection {
         for (int currX = Math.min(x1, x2); currX <= Math.max(x2, x1); currX++) {
             for (int currY = Math.min(y1, y2); currY <= Math.max(y2, y1); currY++) {
                 for (int currZ = Math.min(z1, z2); currZ <= Math.max(z2, z1); currZ++) {
-                    blocks[currIndex] = ApiBlock.getBlockAt(world, currX, currY, currZ);
+                    blocks[currIndex] = ApiBlockServer.getBlockAt(world, currX, currY, currZ);
                     blockDATAs[currIndex] = world.getBlockMetadata(currX, currY, currZ);
                     TileEntity te = world.getTileEntity(currX, currY, currZ);
                     if (te != null) {
@@ -53,7 +53,7 @@ public class WorldSection {
         for (int currX = Math.min(x1, x2); currX <= Math.max(x2, x1); currX++) {
             for (int currY = Math.min(y1, y2); currY <= Math.max(y2, y1); currY++) {
                 for (int currZ = Math.min(z1, z2); currZ <= Math.max(z2, z1); currZ++) {
-                    ApiBlock.setBlockAt(world, currX, currY, currZ, blocks[currIndex], blockDATAs[currIndex], ENotificationType.NOTIFY_CLIENTS.getType());
+                    ApiBlockServer.setBlockAt(world, currX, currY, currZ, blocks[currIndex], blockDATAs[currIndex], ENotificationType.NOTIFY_CLIENTS.getType());
                     TileEntity te = world.getTileEntity(currX, currY, currZ);
                     if (te != null) {
                         world.setTileEntity(currX, currY, currZ, TileEntity.createAndLoadEntity(tileEntities.getCompoundTag(currX + "," + currY + "," + currZ)));

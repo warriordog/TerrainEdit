@@ -2,8 +2,8 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.main.CommandTE;
 import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
-import com.blazeloader.api.api.chat.ApiChat;
-import com.blazeloader.api.api.chat.EChatColor;
+import com.blazeloader.api.direct.base.api.chat.EChatColor;
+import com.blazeloader.api.direct.server.api.chat.ApiChatServer;
 import net.minecraft.command.ICommandSender;
 
 /**
@@ -49,7 +49,7 @@ public abstract class Function {
      * @param message The message to send.
      */
     protected void sendChat(ICommandSender target, String message) {
-        ApiChat.sendChat(target, message);
+        ApiChatServer.sendChat(target, message);
     }
 
     /**
