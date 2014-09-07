@@ -39,21 +39,16 @@ public class FunctionDelete extends Function {
     @Override
     public void execute(ICommandSender user, String[] args) {
         Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
-        if (cuboid.getIsSet()) {
-            try {
-                UndoList.createUndoTask(user.getEntityWorld(), cuboid);
-                for (int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++) {
-                    for (int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++) {
-                        for (int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++) {
-                            ApiBlockServer.setBlockAt(user.getEntityWorld(), x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
-                        }
+        if (cuboid.isSet()) {
+            UndoList.createUndoTask(user.getEntityWorld(), cuboid);
+            for (int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++) {
+                for (int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++) {
+                    for (int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++) {
+                        ApiBlockServer.setBlockAt(user.getEntityWorld(), x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                     }
                 }
-                sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
-            } catch (Exception e) {
-                sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while deleting blocks!");
-                e.printStackTrace();
             }
+            sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
         } else {
             sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
         }
@@ -66,6 +61,26 @@ public class FunctionDelete extends Function {
      */
     @Override
     public String getFunctionDescription() {
-        return "Deletes all blocks in the selection";
+        return "Deletes all blocks in the selection.";
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return PERMISSION_OP;
+    }
+
+    @Override
+    public int getNumRequiredArgs() {
+        return 0;
+    }
+
+    @Override
+    public String getFunctionUsage() {
+        return getFunctionName();
+    }
+
+    @Override
+    public String[] getAliases() {
+        return new String[]{"del", "rm"};
     }
 }

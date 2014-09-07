@@ -42,38 +42,31 @@ public class FunctionGenRan extends Function {
      */
     @Override
     public void execute(ICommandSender user, String[] args) {
-        if (args.length < 3) {
-            sendChatLine(user, EChatColor.COLOR_RED + "Not enough args!  Use /te genran <chance> <block> [metadata]");
-        } else {
-            try {
-                Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
-                if (cuboid.getIsSet()) {
-                    int chance = Integer.parseInt(args[1]);
-                    Block block = ApiBlockServer.getBlockByNameOrId(args[2]);
-                    int meta = 0;
-                    if (args.length >= 4) {
-                        meta = Integer.parseInt(args[3]);
-                    }
-                    UndoList.createUndoTask(user.getEntityWorld(), cuboid);
-                    for (int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++) {
-                        for (int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++) {
-                            for (int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++) {
-                                if (random.nextInt(100) < chance) {
-                                    ApiBlockServer.setBlockAt(user.getEntityWorld(), x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
-                                }
+        try {
+            Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
+            if (cuboid.isSet()) {
+                int chance = Integer.parseInt(args[1]);
+                Block block = ApiBlockServer.getBlockByNameOrId(args[2]);
+                int meta = 0;
+                if (args.length >= 4) {
+                    meta = Integer.parseInt(args[3]);
+                }
+                UndoList.createUndoTask(user.getEntityWorld(), cuboid);
+                for (int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++) {
+                    for (int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++) {
+                        for (int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++) {
+                            if (random.nextInt(100) < chance) {
+                                ApiBlockServer.setBlockAt(user.getEntityWorld(), x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
                             }
                         }
                     }
-                    sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
-                } else {
-                    sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
                 }
-            } catch (NumberFormatException e) {
-                sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use /te genran <chance> <block> [metadata]");
-            } catch (Exception e) {
-                sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while generating blocks!");
-                e.printStackTrace();
+                sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+            } else {
+                sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
             }
+        } catch (NumberFormatException e) {
+            sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use /te genran <chance> <block> [metadata]");
         }
     }
 
@@ -85,5 +78,25 @@ public class FunctionGenRan extends Function {
     @Override
     public String getFunctionDescription() {
         return "Generates terrain based on random numbers";
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return PERMISSION_OP;
+    }
+
+    @Override
+    public int getNumRequiredArgs() {
+        return 2;
+    }
+
+    @Override
+    public String getFunctionUsage() {
+        return getFunctionName() + " <chance> <block> [metadata]";
+    }
+
+    @Override
+    public String[] getAliases() {
+        return new String[0];
     }
 }

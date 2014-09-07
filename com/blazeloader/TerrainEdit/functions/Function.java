@@ -10,6 +10,12 @@ import net.minecraft.command.ICommandSender;
  * Base class for /te functions
  */
 public abstract class Function {
+    public static final int PERMISSION_NONE = 0;
+    public static final int PERMISSION_PLAYER = 1;
+    public static final int PERMISSION_COMMAND_BLOCK = 3;
+    public static final int PERMISSION_OP = 4;
+    public static final int PERMISSION_CONSOLE = 4;
+
     protected ModTerrainEdit baseMod;
     protected CommandTE baseCommand;
 
@@ -17,6 +23,9 @@ public abstract class Function {
         this.baseMod = baseMod;
         this.baseCommand = baseCommand;
         baseCommand.functionList.put(this.getFunctionName(), this);
+        for (String str : getAliases()) {
+            baseCommand.functionList.put(str, this);
+        }
     }
 
     /**
@@ -41,6 +50,14 @@ public abstract class Function {
      * @return Return a concise description of what the function does.
      */
     public abstract String getFunctionDescription();
+
+    public abstract int getRequiredPermissionLevel();
+
+    public abstract int getNumRequiredArgs();
+
+    public abstract String getFunctionUsage();
+
+    public abstract String[] getAliases();
 
     /**
      * Sends chat to a command user.

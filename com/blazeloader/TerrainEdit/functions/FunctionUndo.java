@@ -33,15 +33,11 @@ public class FunctionUndo extends Function {
      */
     @Override
     public void execute(ICommandSender user, String[] args) {
-        try {
-            if (UndoList.hasTask()) {
-                UndoList.undoLastTask(user.getEntityWorld());
-                sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
-            } else {
-                sendChatLine(user, EChatColor.COLOR_RED + "There is nothing to undo!");
-            }
-        } catch (Exception e) {
-            sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while undoing the previous action!!");
+        if (UndoList.hasTask()) {
+            UndoList.undoLastTask(user.getEntityWorld());
+            sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+        } else {
+            sendChatLine(user, EChatColor.COLOR_RED + "There is nothing to undo!");
         }
     }
 
@@ -53,5 +49,25 @@ public class FunctionUndo extends Function {
     @Override
     public String getFunctionDescription() {
         return "Undoes a previous TE action.";
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return PERMISSION_OP;
+    }
+
+    @Override
+    public int getNumRequiredArgs() {
+        return 0;
+    }
+
+    @Override
+    public String getFunctionUsage() {
+        return getFunctionName();
+    }
+
+    @Override
+    public String[] getAliases() {
+        return new String[0];
     }
 }

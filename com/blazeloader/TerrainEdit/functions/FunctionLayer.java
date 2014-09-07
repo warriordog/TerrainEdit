@@ -44,51 +44,43 @@ public class FunctionLayer extends Function {
      */
     @Override
     public void execute(ICommandSender user, String[] args) {
-        if (args.length < 2) {
-            sendChatLine(user, EChatColor.COLOR_RED + "Not enough arguments!  Use /te layer <block> [metadata] [switches]");
-        } else {
-            Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
-            if (cuboid.getIsSet()) {
-                try {
-                    Block block = ApiBlockServer.getBlockByNameOrId(args[1]);
-                    int meta = 0;
-                    boolean onlyOnExistingBlock = false;
-                    if (args.length >= 3) {
-                        meta = Integer.parseInt(args[2]);
-                        if (args.length >= 4) {
-                            List<String> switches = Arrays.asList(args[3].split("-"));
-                            if (switches.contains("b")) {
-                                onlyOnExistingBlock = true;
-                            }
+        Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
+        if (cuboid.isSet()) {
+            try {
+                Block block = ApiBlockServer.getBlockByNameOrId(args[1]);
+                int meta = 0;
+                boolean onlyOnExistingBlock = false;
+                if (args.length >= 3) {
+                    meta = Integer.parseInt(args[2]);
+                    if (args.length >= 4) {
+                        List<String> switches = Arrays.asList(args[3].split("-"));
+                        if (switches.contains("b")) {
+                            onlyOnExistingBlock = true;
                         }
                     }
-                    UndoList.createUndoTask(user.getEntityWorld(), cuboid);
-                    World world = user.getEntityWorld();
-                    int maxY = Math.max(cuboid.getYPos1(), cuboid.getYPos2());
-                    int minY = Math.min(cuboid.getYPos1(), cuboid.getYPos2());
-                    for (int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++) {
-                        for (int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++) {
-                            int y = getHighestBlock(world, x, z, maxY, minY - 1) + 1;
-                            if (y <= maxY && y >= minY) {
-                                if (!onlyOnExistingBlock) {
-                                    ApiBlockServer.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
-                                } else if (ApiBlockServer.getBlockAt(world, x, y - 1, z) != Blocks.air) {
-                                    ApiBlockServer.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
-                                }
-
-                            }
-                        }
-                    }
-                    sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
-                } catch (NumberFormatException e) {
-                    sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use Use /te layer <block> [metadata] [switches]");
-                } catch (Exception e) {
-                    sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while layering blocks!");
-                    e.printStackTrace();
                 }
-            } else {
-                sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
+                UndoList.createUndoTask(user.getEntityWorld(), cuboid);
+                World world = user.getEntityWorld();
+                int maxY = Math.max(cuboid.getYPos1(), cuboid.getYPos2());
+                int minY = Math.min(cuboid.getYPos1(), cuboid.getYPos2());
+                for (int x = Math.min(cuboid.getXPos1(), cuboid.getXPos2()); x <= Math.max(cuboid.getXPos1(), cuboid.getXPos2()); x++) {
+                    for (int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++) {
+                        int y = getHighestBlock(world, x, z, maxY, minY - 1) + 1;
+                        if (y <= maxY && y >= minY) {
+                            if (!onlyOnExistingBlock) {
+                                ApiBlockServer.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                            } else if (ApiBlockServer.getBlockAt(world, x, y - 1, z) != Blocks.air) {
+                                ApiBlockServer.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                            }
+                        }
+                    }
+                }
+                sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+            } catch (NumberFormatException e) {
+                sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use Use /te layer <block> [metadata] [switches]");
             }
+        } else {
+            sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
         }
     }
 
@@ -100,6 +92,26 @@ public class FunctionLayer extends Function {
     @Override
     public String getFunctionDescription() {
         return "Adds a layer of blocks to the cuboid.";
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return PERMISSION_OP;
+    }
+
+    @Override
+    public int getNumRequiredArgs() {
+        return 1;
+    }
+
+    @Override
+    public String getFunctionUsage() {
+        return getFunctionName() + " <block> [metadata] [switches]";
+    }
+
+    @Override
+    public String[] getAliases() {
+        return new String[0];
     }
 
     public int getHighestBlock(World world, int x, int z, int maxY, int minY) {

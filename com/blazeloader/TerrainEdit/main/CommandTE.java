@@ -19,8 +19,8 @@ public class CommandTE extends BLCommandBase {
         super();
         this.baseMod = baseMod;
         new FunctionHelp(baseMod, this);
-        new FunctionP1(baseMod, this);
-        new FunctionP2(baseMod, this);
+        new FunctionCuboid(baseMod, this, FunctionCuboid.CORNER_1);
+        new FunctionCuboid(baseMod, this, FunctionCuboid.CORNER_2);
         new FunctionSet(baseMod, this);
         new FunctionDelete(baseMod, this);
         new FunctionGenRan(baseMod, this);
@@ -51,15 +51,34 @@ public class CommandTE extends BLCommandBase {
 
     @Override
     public void processCommand(ICommandSender user, String[] args) {
-        if (args.length == 0) {
-            sendChatLine(user, EChatColor.COLOR_RED + "Please specify a function using /te [function [args]].  Use /te help for more info.");
-        } else {
-            Function function = functionList.get(args[0]);
-            if (function != null) {
-                function.execute(user, args);
+        try {
+            if (args.length == 0) {
+                sendChatLine(user, EChatColor.COLOR_RED + "Please specify a function using /te [function [args]].  Use /te help for more info.");
             } else {
-                sendChat(user, EChatColor.COLOR_RED + "Unknown function!  Use \"/te help\" for a list.");
+                Function function = functionList.get(args[0]);
+                if (function != null) {
+                    if (function.getNumRequiredArgs() > args.length) {//must be greater because first index is function name!
+                        if (user.canCommandSenderUseCommand(function.getRequiredPermissionLevel(), "te " + function.getFunctionName())) {
+                            try {
+                                function.execute(user, args);
+                            } catch (Exception e) {
+                                sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "An error occurred while executing the command!  Please tell a server administrator!");
+                                ModTerrainEdit.instance.logger.logError("Exception executing function " + function.getFunctionName() + "!", e);
+                            }
+                        } else {
+                            sendChat(user, EChatColor.COLOR_RED + "You do not have permission to execute this command!");
+                        }
+                    } else {
+                        sendChat(user, EChatColor.COLOR_RED + "Not enough args!  Use \"/te " + function.getFunctionUsage() + "\"!");
+                    }
+                } else {
+                    sendChat(user, EChatColor.COLOR_RED + "Unknown function!  Use \"/te help\" for a list.");
+                }
             }
+
+        } catch (Exception e) {
+            sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An unknown error occurred!  Please tell a server administrator!");
+            ModTerrainEdit.instance.logger.logError("Unknown exception occurred!", e);
         }
     }
 }

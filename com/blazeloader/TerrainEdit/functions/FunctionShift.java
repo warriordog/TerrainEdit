@@ -42,50 +42,43 @@ public class FunctionShift extends Function {
      */
     @Override
     public void execute(ICommandSender user, String[] args) {
-        if (args.length < 2) {
-            sendChatLine(user, EChatColor.COLOR_RED + "Not enough arguments!  Use /te shift <distance> [switches]");
-        } else {
-            Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
-            if (cuboid.getIsSet()) {
-                try {
-                    int distance = Integer.parseInt(args[1]);
-                    boolean allowShiftOutOfCuboid = false;
-                    if (args.length >= 3) {
-                        List<String> switches = Arrays.asList(args[2].split("-"));
-                        if (switches.contains("allowOutOfCuboid")) {
-                            allowShiftOutOfCuboid = true;
-                        }
+        Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
+        if (cuboid.isSet()) {
+            try {
+                int distance = Integer.parseInt(args[1]);
+                boolean allowShiftOutOfCuboid = false;
+                if (args.length >= 3) {
+                    List<String> switches = Arrays.asList(args[2].split("-"));
+                    if (switches.contains("allowOutOfCuboid")) {
+                        allowShiftOutOfCuboid = true;
                     }
-                    UndoList.createUndoTask(user.getEntityWorld(), cuboid);
-                    World world = user.getEntityWorld();
-                    boolean dir = distance >= 0;
-                    int y1 = dir ? cuboid.getMaxY() : cuboid.getMinY();
-                    int y2 = dir ? cuboid.getMinY() : cuboid.getMaxY();
-                    for (int x = cuboid.getMinX(); x <= cuboid.getMaxX(); x++) {
-                        for (int z = cuboid.getMinZ(); z <= cuboid.getMaxZ(); z++) {
-                            for (int y = y2; dir ? y >= y1 : y <= y1; y = dir ? y - 1 : y + 1) {
-                                if (allowShiftOutOfCuboid || (y + distance >= y2 && y + distance <= y1)) {
-                                    if (dir) {
-                                        ApiBlockServer.setBlockAt(world, x, y + distance, z, ApiBlockServer.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                        ApiBlockServer.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
-                                    } else {
-                                        ApiBlockServer.setBlockAt(world, x, y - distance, z, ApiBlockServer.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                        ApiBlockServer.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
-                                    }
+                }
+                UndoList.createUndoTask(user.getEntityWorld(), cuboid);
+                World world = user.getEntityWorld();
+                boolean dir = distance >= 0;
+                int y1 = dir ? cuboid.getMaxY() : cuboid.getMinY();
+                int y2 = dir ? cuboid.getMinY() : cuboid.getMaxY();
+                for (int x = cuboid.getMinX(); x <= cuboid.getMaxX(); x++) {
+                    for (int z = cuboid.getMinZ(); z <= cuboid.getMaxZ(); z++) {
+                        for (int y = y2; dir ? y >= y1 : y <= y1; y = dir ? y - 1 : y + 1) {
+                            if (allowShiftOutOfCuboid || (y + distance >= y2 && y + distance <= y1)) {
+                                if (dir) {
+                                    ApiBlockServer.setBlockAt(world, x, y + distance, z, ApiBlockServer.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
+                                    ApiBlockServer.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                                } else {
+                                    ApiBlockServer.setBlockAt(world, x, y - distance, z, ApiBlockServer.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
+                                    ApiBlockServer.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
                                 }
                             }
                         }
                     }
-                    sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
-                } catch (NumberFormatException e) {
-                    sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use /te shift <distance> [switches]");
-                } catch (Exception e) {
-                    sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An error occurred while shifting blocks!");
-                    e.printStackTrace();
                 }
-            } else {
-                sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
+                sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+            } catch (NumberFormatException e) {
+                sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use \"/te " + getFunctionUsage() + "\".");
             }
+        } else {
+            sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
         }
     }
 
@@ -97,5 +90,25 @@ public class FunctionShift extends Function {
     @Override
     public String getFunctionDescription() {
         return "Shifts blocks up or down by an amount.";
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return PERMISSION_OP;
+    }
+
+    @Override
+    public int getNumRequiredArgs() {
+        return 1;
+    }
+
+    @Override
+    public String getFunctionUsage() {
+        return getFunctionName() + " <distance> [switches]";
+    }
+
+    @Override
+    public String[] getAliases() {
+        return new String[]{"move", "mv"};
     }
 }

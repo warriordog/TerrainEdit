@@ -38,40 +38,33 @@ public class FunctionSchemLoad extends Function {
     @Override
     public void execute(ICommandSender user, String[] args) {
         try {
-            if (args.length < 2) {
-                sendChatLine(user, EChatColor.COLOR_RED + "Not enough args!  Use /schemload <path_to_schematic> [x] [y] [z]");
-            } else {
-                File schematic = new File(args[1]);
-                if (schematic.exists() && schematic.isFile()) {
-                    if (args.length == 2) {
-                        ChunkCoordinates loc = user.getPlayerCoordinates();
-                        try {
-                            new Schematic(schematic).place(user.getEntityWorld(), loc.posX, loc.posY, loc.posZ);
-                            sendChatLine(user, EChatColor.COLOR_YELLOW + "Placed schematic.");
-                        } catch (Exception e) {
-                            sendChatLine(user, EChatColor.COLOR_RED.toString() + EChatColor.FORMAT_BOLD.toString() + EChatColor.FORMAT_UNDERLINE.toString() + "Unable to place schematic!");
-                            e.printStackTrace();
-                        }
-                    } else if (args.length >= 5) {
-                        try {
-                            new Schematic(schematic).place(user.getEntityWorld(), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[2]));
-                            sendChatLine(user, EChatColor.COLOR_YELLOW + "Placed schematic.");
-                        } catch (Exception e) {
-                            sendChatLine(user, EChatColor.COLOR_RED.toString() + EChatColor.FORMAT_BOLD.toString() + EChatColor.FORMAT_UNDERLINE.toString() + "Unable to place schematic!");
-                            e.printStackTrace();
-                        }
-                    } else {
-                        sendChatLine(user, EChatColor.COLOR_RED + "Illegal args!  Use /schemload <path_to_schematic> [x] [y] [z]");
+            File schematic = new File(args[1]);
+            if (schematic.exists() && schematic.isFile()) {
+                if (args.length == 2) {
+                    ChunkCoordinates loc = user.getPlayerCoordinates();
+                    try {
+                        new Schematic(schematic).place(user.getEntityWorld(), loc.posX, loc.posY, loc.posZ);
+                        sendChatLine(user, EChatColor.COLOR_YELLOW + "Placed schematic.");
+                    } catch (Exception e) {
+                        sendChatLine(user, EChatColor.COLOR_RED + "Unable to place schematic!");
+                        e.printStackTrace();
+                    }
+                } else if (args.length >= 5) {
+                    try {
+                        new Schematic(schematic).place(user.getEntityWorld(), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[2]));
+                        sendChatLine(user, EChatColor.COLOR_YELLOW + "Placed schematic.");
+                    } catch (Exception e) {
+                        sendChatLine(user, EChatColor.COLOR_RED + "Unable to place schematic!");
+                        e.printStackTrace();
                     }
                 } else {
-                    sendChatLine(user, EChatColor.COLOR_RED + "The specified schematic was not found!");
+                    sendChatLine(user, EChatColor.COLOR_RED + "Illegal args!  Use \"/te " + getFunctionUsage() + "\".");
                 }
+            } else {
+                sendChatLine(user, EChatColor.COLOR_RED + "The specified schematic was not found!");
             }
         } catch (NumberFormatException e) {
             sendChatLine(user, EChatColor.COLOR_RED + "Illegal args!  x, y, and z must be integers!");
-        } catch (Exception e) {
-            sendChatLine(user, EChatColor.COLOR_RED.toString() + EChatColor.FORMAT_BOLD.toString() + EChatColor.FORMAT_UNDERLINE.toString() + "An error occurred while placing schematic!");
-            e.printStackTrace();
         }
     }
 
@@ -83,5 +76,25 @@ public class FunctionSchemLoad extends Function {
     @Override
     public String getFunctionDescription() {
         return "Imports a schematic into the world.";
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return PERMISSION_OP;
+    }
+
+    @Override
+    public int getNumRequiredArgs() {
+        return 1;
+    }
+
+    @Override
+    public String getFunctionUsage() {
+        return getFunctionName() + " <path_to_schematic> [x] [y] [z]";
+    }
+
+    @Override
+    public String[] getAliases() {
+        return new String[0];
     }
 }

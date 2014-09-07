@@ -44,26 +44,25 @@ public class FunctionHelp extends Function {
                 currPage = Integer.parseInt(args[1]);
             }
             if (currPage > numPages) {
-                sendChatLine(user, EChatColor.COLOR_RED + "" + "Page does not exist!  There are only " + numPages + " pages!");
-            } else {
-                sendChatLine(user, EChatColor.COLOR_DARK_GREEN + "" + EChatColor.FORMAT_UNDERLINE + "Available TE functions (Page " + +currPage + " of " + numPages + "):");
-                sendChatLine(user, "");
-                Object[] functions = baseCommand.functionList.values().toArray();
-                Collections.sort(Arrays.asList(functions), new Comparator<Object>() {
-                    @Override
-                    public int compare(Object o1, Object o2) {
-                        return ((Function) o1).getFunctionName().compareTo(((Function) o2).getFunctionName());
-                    }
-                });
-                for (int index = 6 * (currPage - 1); index < 6 * currPage && index < baseCommand.functionList.size(); index++) {
-                    Function function = (Function) functions[index];
-                    sendChatLine(user, EChatColor.COLOR_YELLOW + function.getFunctionName() + EChatColor.COLOR_ORANGE + " - " + function.getFunctionDescription());
+                currPage = numPages;
+            }
+            sendChatLine(user, EChatColor.COLOR_DARK_GREEN + "" + EChatColor.FORMAT_UNDERLINE + "Available TE functions (Page " + +currPage + " of " + numPages + "):");
+            sendChatLine(user, "");
+            Object[] functions = baseCommand.functionList.values().toArray();
+            //todo: rewrite, completely.  everything is wrong with this :)
+            Collections.sort(Arrays.asList(functions), new Comparator<Object>() {
+                @Override
+                public int compare(Object o1, Object o2) {
+                    return ((Function) o1).getFunctionName().compareTo(((Function) o2).getFunctionName());
                 }
+            });
+            for (int index = 6 * (currPage - 1); index < 6 * currPage && index < baseCommand.functionList.size(); index++) {
+                Function function = (Function) functions[index];
+                sendChatLine(user, EChatColor.COLOR_YELLOW + function.getFunctionName() + EChatColor.COLOR_ORANGE + " - " + function.getFunctionDescription());
             }
         } catch (NumberFormatException e) {
-            sendChatLine(user, EChatColor.COLOR_RED + "" + "Invalid page number!  Must be an integer!");
+            sendChatLine(user, EChatColor.COLOR_RED + "Invalid page number!  Must be an integer!");
         }
-
     }
 
     /**
@@ -74,5 +73,25 @@ public class FunctionHelp extends Function {
     @Override
     public String getFunctionDescription() {
         return "Gets a list of TE functions";
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return PERMISSION_NONE;
+    }
+
+    @Override
+    public int getNumRequiredArgs() {
+        return 0;
+    }
+
+    @Override
+    public String getFunctionUsage() {
+        return getFunctionName() + " [page]";
+    }
+
+    @Override
+    public String[] getAliases() {
+        return new String[0];
     }
 }
