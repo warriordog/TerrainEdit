@@ -2,7 +2,7 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.main.CommandTE;
 import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
-import com.blazeloader.api.direct.base.api.chat.EChatColor;
+import com.blazeloader.api.api.chat.ChatColor;
 import net.minecraft.command.ICommandSender;
 
 import java.util.Arrays;
@@ -46,7 +46,7 @@ public class FunctionHelp extends Function {
             if (currPage > numPages) {
                 currPage = numPages;
             }
-            sendChatLine(user, EChatColor.COLOR_DARK_GREEN + "" + EChatColor.FORMAT_UNDERLINE + "Available TE functions (Page " + +currPage + " of " + numPages + "):");
+            sendChatLine(user, ChatColor.COLOR_DARK_GREEN + "" + ChatColor.FORMAT_UNDERLINE + "Available TE functions (Page " + +currPage + " of " + numPages + "):");
             sendChatLine(user, "");
             Object[] functions = baseCommand.functionList.values().toArray();
             //todo: rewrite, completely.  everything is wrong with this :)
@@ -58,10 +58,10 @@ public class FunctionHelp extends Function {
             });
             for (int index = 6 * (currPage - 1); index < 6 * currPage && index < baseCommand.functionList.size(); index++) {
                 Function function = (Function) functions[index];
-                sendChatLine(user, EChatColor.COLOR_YELLOW + function.getFunctionName() + EChatColor.COLOR_ORANGE + " - " + function.getFunctionDescription());
+                sendChatLine(user, ChatColor.COLOR_YELLOW + function.getFunctionName() + ChatColor.COLOR_ORANGE + " - " + function.getFunctionDescription());
             }
         } catch (NumberFormatException e) {
-            sendChatLine(user, EChatColor.COLOR_RED + "Invalid page number!  Must be an integer!");
+            sendChatLine(user, ChatColor.COLOR_RED + "Invalid page number!  Must be an integer!");
         }
     }
 

@@ -1,8 +1,8 @@
 package com.blazeloader.TerrainEdit.main;
 
 import com.blazeloader.TerrainEdit.functions.*;
-import com.blazeloader.api.direct.base.api.chat.EChatColor;
-import com.blazeloader.api.direct.server.api.command.BLCommandBase;
+import com.blazeloader.api.api.chat.ChatColor;
+import com.blazeloader.api.api.command.BLCommandBase;
 import net.minecraft.command.ICommandSender;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class CommandTE extends BLCommandBase {
     public void processCommand(ICommandSender user, String[] args) {
         try {
             if (args.length == 0) {
-                sendChatLine(user, EChatColor.COLOR_RED + "Please specify a function using /te [function [args]].  Use /te help for more info.");
+                sendChatLine(user, ChatColor.COLOR_RED + "Please specify a function using /te [function [args]].  Use /te help for more info.");
             } else {
                 Function function = functionList.get(args[0]);
                 if (function != null) {
@@ -62,22 +62,22 @@ public class CommandTE extends BLCommandBase {
                             try {
                                 function.execute(user, args);
                             } catch (Exception e) {
-                                sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "An error occurred while executing the command!  Please tell a server administrator!");
+                                sendChatLine(user, ChatColor.COLOR_RED + "" + ChatColor.FORMAT_UNDERLINE + "An error occurred while executing the command!  Please tell a server administrator!");
                                 ModTerrainEdit.instance.logger.logError("Exception executing function " + function.getFunctionName() + "!", e);
                             }
                         } else {
-                            sendChat(user, EChatColor.COLOR_RED + "You do not have permission to execute this command!");
+                            sendChat(user, ChatColor.COLOR_RED + "You do not have permission to execute this command!");
                         }
                     } else {
-                        sendChat(user, EChatColor.COLOR_RED + "Not enough args!  Use \"/te " + function.getFunctionUsage() + "\"!");
+                        sendChat(user, ChatColor.COLOR_RED + "Not enough args!  Use \"/te " + function.getFunctionUsage() + "\"!");
                     }
                 } else {
-                    sendChat(user, EChatColor.COLOR_RED + "Unknown function!  Use \"/te help\" for a list.");
+                    sendChat(user, ChatColor.COLOR_RED + "Unknown function!  Use \"/te help\" for a list.");
                 }
             }
 
         } catch (Exception e) {
-            sendChatLine(user, EChatColor.COLOR_RED + "" + EChatColor.FORMAT_UNDERLINE + "" + EChatColor.FORMAT_BOLD + "An unknown error occurred!  Please tell a server administrator!");
+            sendChatLine(user, ChatColor.COLOR_RED.combine(ChatColor.FORMAT_UNDERLINE) + ChatColor.FORMAT_BOLD + "An unknown error occurred!  Please tell a server administrator!");
             ModTerrainEdit.instance.logger.logError("Unknown exception occurred!", e);
         }
     }

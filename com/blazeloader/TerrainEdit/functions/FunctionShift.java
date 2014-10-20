@@ -2,12 +2,12 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.cuboid.Cuboid;
 import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.BlockAccess;
 import com.blazeloader.TerrainEdit.main.CommandTE;
 import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
-import com.blazeloader.api.direct.base.api.chat.EChatColor;
-import com.blazeloader.api.direct.server.api.block.ApiBlockServer;
-import com.blazeloader.api.direct.server.api.block.ENotificationType;
+import com.blazeloader.api.api.block.NotificationType;
+import com.blazeloader.api.api.chat.ChatColor;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -42,7 +42,7 @@ public class FunctionShift extends Function {
      */
     @Override
     public void execute(ICommandSender user, String[] args) {
-        Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
+        Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getName());
         if (cuboid.isSet()) {
             try {
                 int distance = Integer.parseInt(args[1]);
@@ -63,22 +63,22 @@ public class FunctionShift extends Function {
                         for (int y = y2; dir ? y >= y1 : y <= y1; y = dir ? y - 1 : y + 1) {
                             if (allowShiftOutOfCuboid || (y + distance >= y2 && y + distance <= y1)) {
                                 if (dir) {
-                                    ApiBlockServer.setBlockAt(world, x, y + distance, z, ApiBlockServer.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                    ApiBlockServer.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                                    BlockAccess.setBlockAt(world, x, y + distance, z, BlockAccess.getBlockTypeAt(world, x, y, z), BlockAccess.getBlockDataAt(world, x, y, z), NotificationType.NOTIFY_CLIENTS);
+                                    BlockAccess.setBlockAt(world, x, y, z, Blocks.air, 0, NotificationType.NOTIFY_CLIENTS);
                                 } else {
-                                    ApiBlockServer.setBlockAt(world, x, y - distance, z, ApiBlockServer.getBlockAt(world, x, y, z), world.getBlockMetadata(x, y, z), ENotificationType.NOTIFY_CLIENTS.getType());
-                                    ApiBlockServer.setBlockAt(world, x, y, z, Blocks.air, 0, ENotificationType.NOTIFY_CLIENTS.getType());
+                                    BlockAccess.setBlockAt(world, x, y - distance, z, BlockAccess.getBlockTypeAt(world, x, y, z), BlockAccess.getBlockDataAt(world, x, y, z), NotificationType.NOTIFY_CLIENTS);
+                                    BlockAccess.setBlockAt(world, x, y, z, Blocks.air, 0, NotificationType.NOTIFY_CLIENTS);
                                 }
                             }
                         }
                     }
                 }
-                sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+                sendChatLine(user, ChatColor.COLOR_YELLOW + "Done.");
             } catch (NumberFormatException e) {
-                sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use \"/te " + getFunctionUsage() + "\".");
+                sendChatLine(user, ChatColor.COLOR_RED + "Invalid arguments!  Use \"/te " + getFunctionUsage() + "\".");
             }
         } else {
-            sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
+            sendChatLine(user, ChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
         }
     }
 

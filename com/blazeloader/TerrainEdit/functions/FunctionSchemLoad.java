@@ -3,9 +3,9 @@ package com.blazeloader.TerrainEdit.functions;
 import com.blazeloader.TerrainEdit.main.CommandTE;
 import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.schematic.Schematic;
-import com.blazeloader.api.direct.base.api.chat.EChatColor;
+import com.blazeloader.api.api.chat.ChatColor;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.BlockPos;
 
 import java.io.File;
 
@@ -41,30 +41,30 @@ public class FunctionSchemLoad extends Function {
             File schematic = new File(args[1]);
             if (schematic.exists() && schematic.isFile()) {
                 if (args.length == 2) {
-                    ChunkCoordinates loc = user.getPlayerCoordinates();
+                    BlockPos loc = user.getPosition();
                     try {
-                        new Schematic(schematic).place(user.getEntityWorld(), loc.posX, loc.posY, loc.posZ);
-                        sendChatLine(user, EChatColor.COLOR_YELLOW + "Placed schematic.");
+                        new Schematic(schematic).place(user.getEntityWorld(), loc.getX(), loc.getY(), loc.getZ());
+                        sendChatLine(user, ChatColor.COLOR_YELLOW + "Placed schematic.");
                     } catch (Exception e) {
-                        sendChatLine(user, EChatColor.COLOR_RED + "Unable to place schematic!");
+                        sendChatLine(user, ChatColor.COLOR_RED + "Unable to place schematic!");
                         e.printStackTrace();
                     }
                 } else if (args.length >= 5) {
                     try {
                         new Schematic(schematic).place(user.getEntityWorld(), Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[2]));
-                        sendChatLine(user, EChatColor.COLOR_YELLOW + "Placed schematic.");
+                        sendChatLine(user, ChatColor.COLOR_YELLOW + "Placed schematic.");
                     } catch (Exception e) {
-                        sendChatLine(user, EChatColor.COLOR_RED + "Unable to place schematic!");
+                        sendChatLine(user, ChatColor.COLOR_RED + "Unable to place schematic!");
                         e.printStackTrace();
                     }
                 } else {
-                    sendChatLine(user, EChatColor.COLOR_RED + "Illegal args!  Use \"/te " + getFunctionUsage() + "\".");
+                    sendChatLine(user, ChatColor.COLOR_RED + "Illegal args!  Use \"/te " + getFunctionUsage() + "\".");
                 }
             } else {
-                sendChatLine(user, EChatColor.COLOR_RED + "The specified schematic was not found!");
+                sendChatLine(user, ChatColor.COLOR_RED + "The specified schematic was not found!");
             }
         } catch (NumberFormatException e) {
-            sendChatLine(user, EChatColor.COLOR_RED + "Illegal args!  x, y, and z must be integers!");
+            sendChatLine(user, ChatColor.COLOR_RED + "Illegal args!  x, y, and z must be integers!");
         }
     }
 

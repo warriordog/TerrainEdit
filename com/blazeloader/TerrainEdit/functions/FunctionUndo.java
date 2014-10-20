@@ -3,7 +3,7 @@ package com.blazeloader.TerrainEdit.functions;
 import com.blazeloader.TerrainEdit.main.CommandTE;
 import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
-import com.blazeloader.api.direct.base.api.chat.EChatColor;
+import com.blazeloader.api.api.chat.ChatColor;
 import net.minecraft.command.ICommandSender;
 
 /**
@@ -35,9 +35,9 @@ public class FunctionUndo extends Function {
     public void execute(ICommandSender user, String[] args) {
         if (UndoList.hasTask()) {
             UndoList.undoLastTask(user.getEntityWorld());
-            sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+            sendChatLine(user, ChatColor.COLOR_YELLOW + "Done.");
         } else {
-            sendChatLine(user, EChatColor.COLOR_RED + "There is nothing to undo!");
+            sendChatLine(user, ChatColor.COLOR_RED + "There is nothing to undo!");
         }
     }
 

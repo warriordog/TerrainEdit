@@ -2,12 +2,13 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.main.CommandTE;
 import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
-import com.blazeloader.api.direct.base.api.chat.EChatColor;
-import com.blazeloader.api.direct.server.api.chat.ApiChatServer;
+import com.blazeloader.api.api.chat.ApiChat;
+import com.blazeloader.api.api.chat.ChatColor;
 import net.minecraft.command.ICommandSender;
 
 /**
  * Base class for /te functions
+ * TODO add function protected boolean hasCuboid(ICommandSender) that sends warning to user
  */
 public abstract class Function {
     public static final int PERMISSION_NONE = 0;
@@ -66,7 +67,7 @@ public abstract class Function {
      * @param message The message to send.
      */
     protected void sendChat(ICommandSender target, String message) {
-        ApiChatServer.sendChat(target, message);
+        ApiChat.sendChat(target, message);
     }
 
     /**
@@ -76,7 +77,7 @@ public abstract class Function {
      * @param message The message to send.
      */
     protected void sendChatLine(ICommandSender target, String message) {
-        sendChat(target, message + EChatColor.FORMAT_RESET);
+        sendChat(target, message + ChatColor.FORMAT_RESET);
     }
 
     /**

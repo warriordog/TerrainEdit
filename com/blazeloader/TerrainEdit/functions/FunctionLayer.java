@@ -2,12 +2,13 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.cuboid.Cuboid;
 import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.BlockAccess;
 import com.blazeloader.TerrainEdit.main.CommandTE;
 import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
-import com.blazeloader.api.direct.base.api.chat.EChatColor;
-import com.blazeloader.api.direct.server.api.block.ApiBlockServer;
-import com.blazeloader.api.direct.server.api.block.ENotificationType;
+import com.blazeloader.api.api.block.ApiBlock;
+import com.blazeloader.api.api.block.NotificationType;
+import com.blazeloader.api.api.chat.ChatColor;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.init.Blocks;
@@ -44,10 +45,10 @@ public class FunctionLayer extends Function {
      */
     @Override
     public void execute(ICommandSender user, String[] args) {
-        Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getCommandSenderName());
+        Cuboid cuboid = CuboidTable.getCuboidForPlayer(user.getName());
         if (cuboid.isSet()) {
             try {
-                Block block = ApiBlockServer.getBlockByNameOrId(args[1]);
+                Block block = ApiBlock.getBlockByNameOrId(args[1]);
                 int meta = 0;
                 boolean onlyOnExistingBlock = false;
                 if (args.length >= 3) {
@@ -68,19 +69,19 @@ public class FunctionLayer extends Function {
                         int y = getHighestBlock(world, x, z, maxY, minY - 1) + 1;
                         if (y <= maxY && y >= minY) {
                             if (!onlyOnExistingBlock) {
-                                ApiBlockServer.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
-                            } else if (ApiBlockServer.getBlockAt(world, x, y - 1, z) != Blocks.air) {
-                                ApiBlockServer.setBlockAt(world, x, y, z, block, meta, ENotificationType.NOTIFY_CLIENTS.getType());
+                                BlockAccess.setBlockAt(world, x, y, z, block, meta, NotificationType.NOTIFY_CLIENTS);
+                            } else if (BlockAccess.getBlockTypeAt(world, x, y - 1, z) != Blocks.air) {
+                                BlockAccess.setBlockAt(world, x, y, z, block, meta, NotificationType.NOTIFY_CLIENTS);
                             }
                         }
                     }
                 }
-                sendChatLine(user, EChatColor.COLOR_YELLOW + "Done.");
+                sendChatLine(user, ChatColor.COLOR_YELLOW + "Done.");
             } catch (NumberFormatException e) {
-                sendChatLine(user, EChatColor.COLOR_RED + "Invalid arguments!  Use Use /te layer <block> [metadata] [switches]");
+                sendChatLine(user, ChatColor.COLOR_RED + "Invalid arguments!  Use Use /te layer <block> [metadata] [switches]");
             }
         } else {
-            sendChatLine(user, EChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
+            sendChatLine(user, ChatColor.COLOR_RED + "You must select a cuboid first!  Use /te p1 and /te p2!");
         }
     }
 
@@ -119,7 +120,7 @@ public class FunctionLayer extends Function {
             throw new IllegalArgumentException("maxY must be less than minY!");
         } else {
             for (int y = maxY; y >= minY; y--) {
-                if (ApiBlockServer.getBlockAt(world, x, y - 1, z) != Blocks.air) {
+                if (BlockAccess.getBlockTypeAt(world, x, y - 1, z) != Blocks.air) {
                     return y;
                 }
             }

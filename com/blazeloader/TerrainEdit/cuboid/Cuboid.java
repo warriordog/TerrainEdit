@@ -2,6 +2,7 @@ package com.blazeloader.TerrainEdit.cuboid;
 
 /**
  * Represents a rectangular cuboid specified by 2 sets of coordinates.
+ * TODO add iterator
  */
 public class Cuboid {
     protected int xPos1;

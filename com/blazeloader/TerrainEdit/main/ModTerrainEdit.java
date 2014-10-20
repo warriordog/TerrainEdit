@@ -1,6 +1,8 @@
 package com.blazeloader.TerrainEdit.main;
 
-import com.blazeloader.api.core.base.mod.BLMod;
+import com.blazeloader.api.mod.BLMod;
+import com.blazeloader.api.version.BuildType;
+import com.blazeloader.api.version.type.ModVersion;
 import net.acomputerdog.core.logger.CLogger;
 
 import java.io.File;
@@ -9,7 +11,7 @@ import java.io.File;
  * Base mod class for TerrainEdit.  Registers CommandTE.
  */
 public class ModTerrainEdit implements BLMod {
-    private final int version = 0;
+    private final ModVersion version = new ModVersion(BuildType.DEVELOPMENT, this, 0, 0);
 
     public CommandTE command;
     public final CLogger logger = new CLogger(this.getName(), true, true);
@@ -29,21 +31,6 @@ public class ModTerrainEdit implements BLMod {
     @Override
     public String getName() {
         return "TerrainEdit";
-    }
-
-    /**
-     * Compares two mods of the same type to determine which is newer.  Mods should override this and implement their own comparison logic.
-     *
-     * @param otherMod The mod to compare
-     * @return Return the newer mod
-     */
-    @Override
-    public BLMod getNewerVersion(BLMod otherMod) {
-        if (otherMod instanceof ModTerrainEdit) {
-            ModTerrainEdit other = (ModTerrainEdit) otherMod;
-            return (this.version > other.version) ? this : other;
-        }
-        return this;
     }
 
     @Override
@@ -75,17 +62,6 @@ public class ModTerrainEdit implements BLMod {
     }
 
     /**
-     * Returns true if this mod is compatible with the installed version of BlazeLoader.  This should be checked using Version.class.
-     * -Called before mod is loaded!  Do not depend on Mod.load()!-
-     *
-     * @return Returns true if the mod is compatible with the installed version of BlazeLoader.
-     */
-    @Override
-    public boolean isCompatibleWithEnvironment() {
-        return true; //todo check MC version
-    }
-
-    /**
      * Gets a user-friendly description of the mod.
      *
      * @return Return a String representing a user-friendly version of the mod.
@@ -93,5 +69,10 @@ public class ModTerrainEdit implements BLMod {
     @Override
     public String getModDescription() {
         return "A command-line terrain editor.";
+    }
+
+    @Override
+    public ModVersion getModVersion() {
+        return version;
     }
 }

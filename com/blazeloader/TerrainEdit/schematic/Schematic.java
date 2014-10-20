@@ -1,13 +1,15 @@
 package com.blazeloader.TerrainEdit.schematic;
 
-import com.blazeloader.api.direct.server.api.block.ApiBlockServer;
-import com.blazeloader.api.direct.server.api.block.ENotificationType;
+import com.blazeloader.TerrainEdit.main.BlockAccess;
+import com.blazeloader.api.api.block.ApiBlock;
+import com.blazeloader.api.api.block.NotificationType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import java.io.File;
@@ -54,7 +56,7 @@ public class Schematic {
             for (int currY = y; currY < y + height; currY++) {
                 for (int currZ = z; currZ < z + length; currZ++) {
                     for (int currX = x; currX < x + width; currX++) {
-                        ApiBlockServer.setBlockAt(world, currX, currY, currZ, ApiBlockServer.getBlockById(blocks[currBlock]), data[currBlock], ENotificationType.NOTIFY_CLIENTS.getType());
+                        BlockAccess.setBlockAt(world, currX, currY, currZ, ApiBlock.getBlockById(blocks[currBlock]), data[currBlock], NotificationType.NOTIFY_CLIENTS);
                         currBlock++;
                     }
                 }
@@ -65,20 +67,19 @@ public class Schematic {
             for (int count = 0; count < tileEntities.tagCount(); count++) {
                 TileEntity currTileEntity = TileEntity.createAndLoadEntity(tileEntities.getCompoundTagAt(count));
                 if (currTileEntity != null) {
-                    currTileEntity.xCoord = currTileEntity.xCoord + length;
-                    currTileEntity.yCoord = currTileEntity.yCoord + height;
-                    currTileEntity.zCoord = currTileEntity.zCoord + width;
+                    BlockPos pos = currTileEntity.getPos();
+                    currTileEntity.setPos(new BlockPos(pos.getX() + length, pos.getY() + height, pos.getZ() + width));
                     tileEntityCollection.add(currTileEntity);
                 }
             }
-            world.func_147448_a(tileEntityCollection);
+            world.addTileEntities(tileEntityCollection);
 
             for (int count = 0; count < entities.tagCount(); count++) {
                 NBTTagCompound currTag = entities.getCompoundTagAt(count);
                 NBTTagList currRot = currTag.getTagList("Rotation", 0);
                 Entity currEntity = EntityList.createEntityByName((currTag.getString("id")), world);
                 if (currEntity != null) {
-                    currEntity.setLocationAndAngles(x, y, z, currRot.getFloatAt(0), currRot.getFloatAt(1));
+                    currEntity.setLocationAndAngles(x, y, z, currRot.getFloat(0), currRot.getFloat(1));
                     currEntity.setAir(currTag.getShort("Air"));
                     currEntity.setFire(currTag.getShort("Fire"));
                     currEntity.fallDistance = (currTag.getFloat("FallDistance"));
