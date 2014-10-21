@@ -1,0 +1,8 @@
+{
+    "mcversion": "1.8.0",
+    "name": "TerrainEdit",
+    "revision": "0",
+    "author": "acomputerdog",
+    "version": "0.0",
+    "description": "Chat-based terrain edit tool"
+}

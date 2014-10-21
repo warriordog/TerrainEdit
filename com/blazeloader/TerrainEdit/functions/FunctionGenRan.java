@@ -2,9 +2,9 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.cuboid.Cuboid;
 import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.BlazeModTerrainEdit;
 import com.blazeloader.TerrainEdit.main.BlockAccess;
 import com.blazeloader.TerrainEdit.main.CommandTE;
-import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
 import com.blazeloader.api.api.block.ApiBlock;
 import com.blazeloader.api.api.block.NotificationType;
@@ -20,8 +20,9 @@ import java.util.Random;
 public class FunctionGenRan extends Function {
     private Random random = new Random("TerrainEdit".hashCode());
 
-    public FunctionGenRan(ModTerrainEdit baseMod, CommandTE baseCommand) {
+    public FunctionGenRan(BlazeModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
+        register();
     }
 
     /**
@@ -30,8 +31,8 @@ public class FunctionGenRan extends Function {
      * @return Return the name of the function.
      */
     @Override
-    public String getFunctionName() {
-        return "genran";
+    public String[] getFunctionNames() {
+        return new String[]{"genran"};
     }
 
     /**
@@ -57,7 +58,7 @@ public class FunctionGenRan extends Function {
                     for (int y = Math.min(cuboid.getYPos1(), cuboid.getYPos2()); y <= Math.max(cuboid.getYPos1(), cuboid.getYPos2()); y++) {
                         for (int z = Math.min(cuboid.getZPos1(), cuboid.getZPos2()); z <= Math.max(cuboid.getZPos1(), cuboid.getZPos2()); z++) {
                             if (random.nextInt(100) < chance) {
-                                BlockAccess.setBlockTypeAt(user.getEntityWorld(), x, y, z, block, NotificationType.NOTIFY_CLIENTS);
+                                BlockAccess.setBlockAt(user.getEntityWorld(), x, y, z, block, meta, NotificationType.NOTIFY_CLIENTS);
                             }
                         }
                     }
@@ -93,11 +94,6 @@ public class FunctionGenRan extends Function {
 
     @Override
     public String getFunctionUsage() {
-        return getFunctionName() + " <chance> <block> [metadata]";
-    }
-
-    @Override
-    public String[] getAliases() {
-        return new String[0];
+        return getFunctionNames()[0] + " <chance> <block> [metadata]";
     }
 }

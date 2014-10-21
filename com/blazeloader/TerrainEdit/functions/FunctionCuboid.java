@@ -2,33 +2,22 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.cuboid.Cuboid;
 import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.BlazeModTerrainEdit;
 import com.blazeloader.TerrainEdit.main.CommandTE;
-import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.api.api.chat.ChatColor;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 
 public class FunctionCuboid extends Function {
-    public static final int CORNER_1 = 0;
-    public static final int CORNER_2 = 1;
+    public static final int CORNER_1 = 1;
+    public static final int CORNER_2 = 2;
 
     private final int corner;
-    private final String commandName;
 
-    public FunctionCuboid(ModTerrainEdit baseMod, CommandTE baseCommand, int corner) {
+    public FunctionCuboid(BlazeModTerrainEdit baseMod, CommandTE baseCommand, int corner) {
         super(baseMod, baseCommand);
         this.corner = corner;
-        this.commandName = "p" + corner;
-    }
-
-    /**
-     * Gets the name of the function.
-     *
-     * @return Return the name of the function.
-     */
-    @Override
-    public String getFunctionName() {
-        return commandName;
+        register();
     }
 
     /**
@@ -89,12 +78,7 @@ public class FunctionCuboid extends Function {
     }
 
     @Override
-    public String getFunctionUsage() {
-        return getFunctionName();
-    }
-
-    @Override
-    public String[] getAliases() {
-        return new String[]{"pos" + corner};
+    public String[] getFunctionNames() {
+        return new String[]{"p" + this.corner, "pos" + this.corner};
     }
 }

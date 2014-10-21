@@ -1,7 +1,7 @@
 package com.blazeloader.TerrainEdit.functions;
 
+import com.blazeloader.TerrainEdit.main.BlazeModTerrainEdit;
 import com.blazeloader.TerrainEdit.main.CommandTE;
-import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.api.api.chat.ApiChat;
 import com.blazeloader.api.api.chat.ChatColor;
 import net.minecraft.command.ICommandSender;
@@ -9,6 +9,7 @@ import net.minecraft.command.ICommandSender;
 /**
  * Base class for /te functions
  * TODO add function protected boolean hasCuboid(ICommandSender) that sends warning to user
+ * TODO put function names in final fields
  */
 public abstract class Function {
     public static final int PERMISSION_NONE = 0;
@@ -17,15 +18,27 @@ public abstract class Function {
     public static final int PERMISSION_OP = 4;
     public static final int PERMISSION_CONSOLE = 4;
 
-    protected ModTerrainEdit baseMod;
+    protected BlazeModTerrainEdit baseMod;
     protected CommandTE baseCommand;
 
-    public Function(ModTerrainEdit baseMod, CommandTE baseCommand) {
+    public Function(BlazeModTerrainEdit baseMod, CommandTE baseCommand) {
         this.baseMod = baseMod;
         this.baseCommand = baseCommand;
-        baseCommand.functionList.put(this.getFunctionName(), this);
-        for (String str : getAliases()) {
-            baseCommand.functionList.put(str, this);
+    }
+
+    protected void register() {
+        String[] names = this.getFunctionNames();
+        if (names == null || names.length == 0) {
+            throw new IllegalArgumentException("Invalid names!");
+        }
+        int nameNum = 0;
+        for (String name : this.getFunctionNames()) {
+            if (nameNum == 0) {
+                baseCommand.registerUniqueFunction(name, this);
+            } else {
+                baseCommand.registerFunction(name, this);
+            }
+            nameNum++;
         }
     }
 
@@ -34,7 +47,7 @@ public abstract class Function {
      *
      * @return Return the name of the function.
      */
-    public abstract String getFunctionName();
+    public abstract String[] getFunctionNames();
 
     /**
      * Executes the command.
@@ -56,9 +69,9 @@ public abstract class Function {
 
     public abstract int getNumRequiredArgs();
 
-    public abstract String getFunctionUsage();
-
-    public abstract String[] getAliases();
+    public String getFunctionUsage() {
+        return getFunctionNames()[0];
+    }
 
     /**
      * Sends chat to a command user.
@@ -87,6 +100,6 @@ public abstract class Function {
      */
     @Override
     public String toString() {
-        return this.getFunctionName();
+        return this.getFunctionNames()[0];
     }
 }

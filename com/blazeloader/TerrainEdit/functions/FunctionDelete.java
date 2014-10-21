@@ -2,9 +2,9 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.cuboid.Cuboid;
 import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.BlazeModTerrainEdit;
 import com.blazeloader.TerrainEdit.main.BlockAccess;
 import com.blazeloader.TerrainEdit.main.CommandTE;
-import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
 import com.blazeloader.api.api.block.NotificationType;
 import com.blazeloader.api.api.chat.ChatColor;
@@ -15,8 +15,9 @@ import net.minecraft.init.Blocks;
  * Function that deletes the blocks in the cuboid.
  */
 public class FunctionDelete extends Function {
-    public FunctionDelete(ModTerrainEdit baseMod, CommandTE baseCommand) {
+    public FunctionDelete(BlazeModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
+        register();
     }
 
     /**
@@ -25,8 +26,8 @@ public class FunctionDelete extends Function {
      * @return Return the name of the function.
      */
     @Override
-    public String getFunctionName() {
-        return "delete";
+    public String[] getFunctionNames() {
+        return new String[]{"delete", "del", "rm"};
     }
 
     /**
@@ -72,15 +73,5 @@ public class FunctionDelete extends Function {
     @Override
     public int getNumRequiredArgs() {
         return 0;
-    }
-
-    @Override
-    public String getFunctionUsage() {
-        return getFunctionName();
-    }
-
-    @Override
-    public String[] getAliases() {
-        return new String[]{"del", "rm"};
     }
 }

@@ -1,21 +1,22 @@
 package com.blazeloader.TerrainEdit.functions;
 
+import com.blazeloader.TerrainEdit.main.BlazeModTerrainEdit;
 import com.blazeloader.TerrainEdit.main.CommandTE;
-import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.api.api.chat.ChatColor;
 import net.minecraft.command.ICommandSender;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 /**
  * A function to return a list of all TE functions and their descriptions.
  */
 public class FunctionHelp extends Function {
 
-    public FunctionHelp(ModTerrainEdit baseMod, CommandTE baseCommand) {
+    private List<String> sortedNames = new ArrayList<String>();
+
+    public FunctionHelp(BlazeModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
+        register();
     }
 
     /**
@@ -24,8 +25,8 @@ public class FunctionHelp extends Function {
      * @return Return the name of the function.
      */
     @Override
-    public String getFunctionName() {
-        return "help";
+    public String[] getFunctionNames() {
+        return new String[]{"help", "hlp", "?"};
     }
 
     /**
@@ -37,31 +38,51 @@ public class FunctionHelp extends Function {
      */
     @Override
     public void execute(ICommandSender user, String[] args) {
-        int numPages = Math.max((baseCommand.functionList.size() / 6) + 1, 1);
+        sortFuncs();
+
+        int numPages = (int) Math.max(Math.ceil((float) sortedNames.size() / 8f), 1);
+        System.out.println((float) sortedNames.size() / 8f);
+        System.out.println("Found " + sortedNames.size() + " sorted functions and " + baseCommand.getUniqueFunctions().size() + " unsorted functions split into " + numPages + " page(s).");
+
         int currPage = 1;
         try {
             if (args.length >= 2) {
                 currPage = Integer.parseInt(args[1]);
             }
-            if (currPage > numPages) {
-                currPage = numPages;
-            }
-            sendChatLine(user, ChatColor.COLOR_DARK_GREEN + "" + ChatColor.FORMAT_UNDERLINE + "Available TE functions (Page " + +currPage + " of " + numPages + "):");
-            sendChatLine(user, "");
-            Object[] functions = baseCommand.functionList.values().toArray();
-            //todo: rewrite, completely.  everything is wrong with this :)
-            Collections.sort(Arrays.asList(functions), new Comparator<Object>() {
-                @Override
-                public int compare(Object o1, Object o2) {
-                    return ((Function) o1).getFunctionName().compareTo(((Function) o2).getFunctionName());
-                }
-            });
-            for (int index = 6 * (currPage - 1); index < 6 * currPage && index < baseCommand.functionList.size(); index++) {
-                Function function = (Function) functions[index];
-                sendChatLine(user, ChatColor.COLOR_YELLOW + function.getFunctionName() + ChatColor.COLOR_ORANGE + " - " + function.getFunctionDescription());
-            }
         } catch (NumberFormatException e) {
             sendChatLine(user, ChatColor.COLOR_RED + "Invalid page number!  Must be an integer!");
+            return;
+        }
+        if (currPage > numPages) {
+            currPage = numPages;
+        }
+        if (currPage < 1) {
+            currPage = 1;
+        }
+        sendChatLine(user, ChatColor.COLOR_DARK_GREEN + "" + ChatColor.FORMAT_UNDERLINE + "Available TE functions (Page " + currPage + " of " + numPages + "):");
+        sendChatLine(user, "");
+
+        Map<String, Function> functions = baseCommand.getUniqueFunctions();
+        for (int index = 8 * (currPage - 1); index < 8 * currPage && index < sortedNames.size() && index >= 0; index++) {
+            String name = sortedNames.get(index);
+            sendChatLine(user, ChatColor.COLOR_YELLOW + name + ChatColor.COLOR_ORANGE + " - " + functions.get(name).getFunctionDescription());
+        }
+    }
+
+    private void sortFuncs() {
+        if (baseCommand.functionListChanged) {
+            Map<String, Function> functions = baseCommand.getUniqueFunctions();
+            sortedNames.clear();
+            for (String name : functions.keySet()) {
+                sortedNames.add(name);
+            }
+            Collections.sort(sortedNames, new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    return o1.compareTo(o2);
+                }
+            });
+            baseCommand.functionListChanged = false;
         }
     }
 
@@ -87,11 +108,7 @@ public class FunctionHelp extends Function {
 
     @Override
     public String getFunctionUsage() {
-        return getFunctionName() + " [page]";
+        return getFunctionNames()[0] + " [page]";
     }
 
-    @Override
-    public String[] getAliases() {
-        return new String[0];
-    }
 }

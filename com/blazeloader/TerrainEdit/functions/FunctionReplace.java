@@ -2,9 +2,9 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.cuboid.Cuboid;
 import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.BlazeModTerrainEdit;
 import com.blazeloader.TerrainEdit.main.BlockAccess;
 import com.blazeloader.TerrainEdit.main.CommandTE;
-import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
 import com.blazeloader.api.api.block.ApiBlock;
 import com.blazeloader.api.api.block.NotificationType;
@@ -17,8 +17,9 @@ import net.minecraft.world.World;
  * Function that replaces all blocks in the cuboid of a specific type with another type.
  */
 public class FunctionReplace extends Function {
-    public FunctionReplace(ModTerrainEdit baseMod, CommandTE baseCommand) {
+    public FunctionReplace(BlazeModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
+        register();
     }
 
     /**
@@ -27,8 +28,8 @@ public class FunctionReplace extends Function {
      * @return Return the name of the function.
      */
     @Override
-    public String getFunctionName() {
-        return "replace";
+    public String[] getFunctionNames() {
+        return new String[]{"replace", "switch", "swap"};
     }
 
     /**
@@ -99,11 +100,6 @@ public class FunctionReplace extends Function {
 
     @Override
     public String getFunctionUsage() {
-        return getFunctionName() + " <block1> <block2> [block1_meta] [block2_meta]";
-    }
-
-    @Override
-    public String[] getAliases() {
-        return new String[]{"switch", "swap"};
+        return getFunctionNames()[0] + " <block1> <block2> [block1_meta] [block2_meta]";
     }
 }

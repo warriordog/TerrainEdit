@@ -1,5 +1,7 @@
 package com.blazeloader.TerrainEdit.main;
 
+import com.blazeloader.api.api.command.ApiCommand;
+import com.blazeloader.api.event.ModEventHandler;
 import com.blazeloader.api.mod.BLMod;
 import com.blazeloader.api.version.BuildType;
 import com.blazeloader.api.version.type.ModVersion;
@@ -10,12 +12,12 @@ import java.io.File;
 /**
  * Base mod class for TerrainEdit.  Registers CommandTE.
  */
-public class ModTerrainEdit implements BLMod {
+public class BlazeModTerrainEdit implements BLMod, ModEventHandler {
     private final ModVersion version = new ModVersion(BuildType.DEVELOPMENT, this, 0, 0);
 
     public CommandTE command;
-    public final CLogger logger = new CLogger(this.getName(), true, true);
-    public static ModTerrainEdit instance;
+    public final CLogger logger = new CLogger(this.getName(), false, true);
+    public static BlazeModTerrainEdit instance;
 
     /**
      * Returns ID used to identify this mod internally, even among different versions of the same mod.  Mods should override.
@@ -25,7 +27,7 @@ public class ModTerrainEdit implements BLMod {
      */
     @Override
     public String getModId() {
-        return "terrainedit";
+        return "TerrainEdit";
     }
 
     @Override
@@ -46,7 +48,8 @@ public class ModTerrainEdit implements BLMod {
      */
     @Override
     public void init(File configPath) {
-
+        instance = this;
+        logger.logInfo("Initialized.");
     }
 
     /**
@@ -74,5 +77,17 @@ public class ModTerrainEdit implements BLMod {
     @Override
     public ModVersion getModVersion() {
         return version;
+    }
+
+    @Override
+    public void start() {
+        command = new CommandTE(this);
+        ApiCommand.registerCommand(command);
+        logger.logInfo("Started.");
+    }
+
+    @Override
+    public void stop() {
+        logger.logInfo("Stopped.");
     }
 }

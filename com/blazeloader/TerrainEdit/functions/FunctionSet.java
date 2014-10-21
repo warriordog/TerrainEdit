@@ -2,9 +2,9 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.cuboid.Cuboid;
 import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.BlazeModTerrainEdit;
 import com.blazeloader.TerrainEdit.main.BlockAccess;
 import com.blazeloader.TerrainEdit.main.CommandTE;
-import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
 import com.blazeloader.api.api.block.ApiBlock;
 import com.blazeloader.api.api.block.NotificationType;
@@ -16,8 +16,9 @@ import net.minecraft.command.ICommandSender;
  * Sets all the blocks in the cuboid to a particular type.
  */
 public class FunctionSet extends Function {
-    public FunctionSet(ModTerrainEdit baseMod, CommandTE baseCommand) {
+    public FunctionSet(BlazeModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
+        register();
     }
 
     /**
@@ -26,8 +27,8 @@ public class FunctionSet extends Function {
      * @return Return the name of the function.
      */
     @Override
-    public String getFunctionName() {
-        return "set";
+    public String[] getFunctionNames() {
+        return new String[]{"set"};
     }
 
     /**
@@ -86,11 +87,6 @@ public class FunctionSet extends Function {
 
     @Override
     public String getFunctionUsage() {
-        return getFunctionName() + " <block> [metadata]";
-    }
-
-    @Override
-    public String[] getAliases() {
-        return new String[0];
+        return getFunctionNames()[0] + " <block> [metadata]";
     }
 }

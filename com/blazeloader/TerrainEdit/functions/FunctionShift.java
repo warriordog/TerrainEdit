@@ -2,9 +2,9 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.cuboid.Cuboid;
 import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.BlazeModTerrainEdit;
 import com.blazeloader.TerrainEdit.main.BlockAccess;
 import com.blazeloader.TerrainEdit.main.CommandTE;
-import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
 import com.blazeloader.api.api.block.NotificationType;
 import com.blazeloader.api.api.chat.ChatColor;
@@ -19,8 +19,9 @@ import java.util.List;
  * A function that shifts blocks up or down by an amount.
  */
 public class FunctionShift extends Function {
-    public FunctionShift(ModTerrainEdit baseMod, CommandTE baseCommand) {
+    public FunctionShift(BlazeModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
+        register();
     }
 
     /**
@@ -29,8 +30,8 @@ public class FunctionShift extends Function {
      * @return Return the name of the function.
      */
     @Override
-    public String getFunctionName() {
-        return "shift";
+    public String[] getFunctionNames() {
+        return new String[]{"shift", "move", "mv"};
     }
 
     /**
@@ -104,11 +105,7 @@ public class FunctionShift extends Function {
 
     @Override
     public String getFunctionUsage() {
-        return getFunctionName() + " <distance> [switches]";
+        return getFunctionNames()[0] + " <distance> [switches]";
     }
 
-    @Override
-    public String[] getAliases() {
-        return new String[]{"move", "mv"};
-    }
 }

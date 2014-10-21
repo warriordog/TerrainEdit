@@ -1,7 +1,7 @@
 package com.blazeloader.TerrainEdit.functions;
 
+import com.blazeloader.TerrainEdit.main.BlazeModTerrainEdit;
 import com.blazeloader.TerrainEdit.main.CommandTE;
-import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.schematic.Schematic;
 import com.blazeloader.api.api.chat.ChatColor;
 import net.minecraft.command.ICommandSender;
@@ -14,8 +14,9 @@ import java.io.File;
  * Cannot currently be undone!
  */
 public class FunctionSchemLoad extends Function {
-    public FunctionSchemLoad(ModTerrainEdit baseMod, CommandTE baseCommand) {
+    public FunctionSchemLoad(BlazeModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
+        register();
     }
 
     /**
@@ -24,8 +25,8 @@ public class FunctionSchemLoad extends Function {
      * @return Return the name of the function.
      */
     @Override
-    public String getFunctionName() {
-        return "schemload";
+    public String[] getFunctionNames() {
+        return new String[]{"schemload"};
     }
 
     /**
@@ -90,11 +91,6 @@ public class FunctionSchemLoad extends Function {
 
     @Override
     public String getFunctionUsage() {
-        return getFunctionName() + " <path_to_schematic> [x] [y] [z]";
-    }
-
-    @Override
-    public String[] getAliases() {
-        return new String[0];
+        return getFunctionNames()[0] + " <path_to_schematic> [x] [y] [z]";
     }
 }

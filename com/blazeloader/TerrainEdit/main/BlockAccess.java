@@ -1,5 +1,6 @@
 package com.blazeloader.TerrainEdit.main;
 
+import com.blazeloader.api.api.block.ApiBlock;
 import com.blazeloader.api.api.block.NotificationType;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -18,7 +19,7 @@ public class BlockAccess {
     }
 
     public static IBlockState getBlockStateAt(World world, BlockPos pos) {
-        return world.getBlockState(pos);
+        return ApiBlock.getBlockAt(world, pos);
     }
 
     public static Block getBlockTypeAt(World world, BlockPos pos) {
@@ -88,7 +89,7 @@ public class BlockAccess {
         for (NotificationType type : flags) {
             flgs += type.getType();
         }
-        world.setBlockState(pos, block, flgs);
+        ApiBlock.setBlockAt(world, pos, block, flgs);
     }
 
     public static void setBlockAt(World world, BlockPos pos, Block block, int meta, NotificationType... flags) {

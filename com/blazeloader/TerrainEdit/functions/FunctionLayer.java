@@ -2,9 +2,9 @@ package com.blazeloader.TerrainEdit.functions;
 
 import com.blazeloader.TerrainEdit.cuboid.Cuboid;
 import com.blazeloader.TerrainEdit.cuboid.CuboidTable;
+import com.blazeloader.TerrainEdit.main.BlazeModTerrainEdit;
 import com.blazeloader.TerrainEdit.main.BlockAccess;
 import com.blazeloader.TerrainEdit.main.CommandTE;
-import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
 import com.blazeloader.api.api.block.ApiBlock;
 import com.blazeloader.api.api.block.NotificationType;
@@ -20,10 +20,10 @@ import java.util.List;
 /**
  * A function that adds a layer of blocks to the cuboid.
  */
-//TODO fix
 public class FunctionLayer extends Function {
-    public FunctionLayer(ModTerrainEdit baseMod, CommandTE baseCommand) {
+    public FunctionLayer(BlazeModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
+        register();
     }
 
     /**
@@ -32,8 +32,8 @@ public class FunctionLayer extends Function {
      * @return Return the name of the function.
      */
     @Override
-    public String getFunctionName() {
-        return "layer";
+    public String[] getFunctionNames() {
+        return new String[]{"layer"};
     }
 
     /**
@@ -107,12 +107,7 @@ public class FunctionLayer extends Function {
 
     @Override
     public String getFunctionUsage() {
-        return getFunctionName() + " <block> [metadata] [switches]";
-    }
-
-    @Override
-    public String[] getAliases() {
-        return new String[0];
+        return getFunctionNames()[0] + " <block> [metadata] [switches]";
     }
 
     public int getHighestBlock(World world, int x, int z, int maxY, int minY) {
@@ -120,7 +115,7 @@ public class FunctionLayer extends Function {
             throw new IllegalArgumentException("maxY must be less than minY!");
         } else {
             for (int y = maxY; y >= minY; y--) {
-                if (BlockAccess.getBlockTypeAt(world, x, y - 1, z) != Blocks.air) {
+                if (BlockAccess.getBlockTypeAt(world, x, y, z) != Blocks.air) {
                     return y;
                 }
             }

@@ -1,7 +1,7 @@
 package com.blazeloader.TerrainEdit.functions;
 
+import com.blazeloader.TerrainEdit.main.BlazeModTerrainEdit;
 import com.blazeloader.TerrainEdit.main.CommandTE;
-import com.blazeloader.TerrainEdit.main.ModTerrainEdit;
 import com.blazeloader.TerrainEdit.undo.UndoList;
 import com.blazeloader.api.api.chat.ChatColor;
 import net.minecraft.command.ICommandSender;
@@ -10,8 +10,9 @@ import net.minecraft.command.ICommandSender;
  * Allows the user to undo TE changes.  Not currently user-specific!
  */
 public class FunctionUndo extends Function {
-    public FunctionUndo(ModTerrainEdit baseMod, CommandTE baseCommand) {
+    public FunctionUndo(BlazeModTerrainEdit baseMod, CommandTE baseCommand) {
         super(baseMod, baseCommand);
+        register();
     }
 
     /**
@@ -20,8 +21,8 @@ public class FunctionUndo extends Function {
      * @return Return the name of the function.
      */
     @Override
-    public String getFunctionName() {
-        return "undo";
+    public String[] getFunctionNames() {
+        return new String[]{"undo"};
     }
 
     /**
@@ -63,11 +64,6 @@ public class FunctionUndo extends Function {
 
     @Override
     public String getFunctionUsage() {
-        return getFunctionName();
-    }
-
-    @Override
-    public String[] getAliases() {
-        return new String[0];
+        return getFunctionNames()[0];
     }
 }
