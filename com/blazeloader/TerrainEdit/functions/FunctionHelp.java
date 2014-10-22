@@ -41,9 +41,6 @@ public class FunctionHelp extends Function {
         sortFuncs();
 
         int numPages = (int) Math.max(Math.ceil((float) sortedNames.size() / 8f), 1);
-        System.out.println((float) sortedNames.size() / 8f);
-        System.out.println("Found " + sortedNames.size() + " sorted functions and " + baseCommand.getUniqueFunctions().size() + " unsorted functions split into " + numPages + " page(s).");
-
         int currPage = 1;
         try {
             if (args.length >= 2) {
